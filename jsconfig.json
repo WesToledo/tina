@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "screens/*": ["src/screens/*"],
+      "actions/*": ["src/store/actions/*"]
+    }
+  }
+}
