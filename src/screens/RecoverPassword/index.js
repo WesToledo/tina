@@ -32,46 +32,13 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-export const SignUpScreen = ({ navigation }) => {
+export const RecoverPasswordScreen = ({ navigation }) => {
   const [form, setForm] = useState({
     email: null,
-    password: null,
-    name: null,
-    password_confirm: null,
   });
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [shouldCaptionRender, setShouldCaptionRender] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
-
-  const toggleSecureEntry = () => {
-    setSecureTextEntry(!secureTextEntry);
-  };
-
-  const checkPassword = () => {
-    if (form.password !== form.password_confirm) {
-      setShouldCaptionRender(true);
-      return false;
-    }
-    return true;
-  };
-
-  const renderIcon = (props) => (
-    <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-      <Icon {...props} name={secureTextEntry ? "eye-off" : "eye"} />
-    </TouchableWithoutFeedback>
-  );
-
-  const renderCaption = () => {
-    return (
-      <View style={styles.captionContainer}>
-        <Icon name="alert-circle-outline" style={styles.captionIcon} />
-        <Text style={styles.captionText}>Senhas não coincidem</Text>
-      </View>
-    );
-  };
 
   async function handleSubmit() {
     setLoading(true);
@@ -96,9 +63,6 @@ export const SignUpScreen = ({ navigation }) => {
         
     //   }
     // }
-
-    navigation.navigate("")
-
   }
 
   return (
@@ -107,19 +71,10 @@ export const SignUpScreen = ({ navigation }) => {
         <Layout style={styles.content}>
           <View style={styles.header}>
             <Text category="h4" style={styles.text}>
-              Crie sua conta
+              Recuperar senha
             </Text>
           </View>
           <View style={styles.form}>
-            <Input
-              style={styles.input}
-              value={form.name}
-              label="Nome"
-              placeholder="Digite seu nome"
-              onChangeText={(nextValue) =>
-                setForm({ ...form, name: nextValue })
-              }
-            />
             <Input
               style={styles.input}
               value={form.email}
@@ -129,52 +84,13 @@ export const SignUpScreen = ({ navigation }) => {
                 setForm({ ...form, email: nextValue })
               }
             />
-            {/* <Text category="s2" style={{ color: "#8f9bb3" }}>
-              Eu sou:
-            </Text>
-            <RadioGroup
-              selectedIndex={selectedIndex}
-              onChange={(index) => setSelectedIndex(index)}
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                alignContent: "center",
-              }}
-            >
-              <Radio>Estudante</Radio>
-              <Radio>Professor</Radio>
-            </RadioGroup> */}
-            <Input
-              style={styles.input}
-              value={form.password}
-              label="Senha"
-              placeholder="Digite sua senha"
-              accessoryRight={renderIcon}
-              secureTextEntry={secureTextEntry}
-              onChangeText={(nextValue) =>
-                setForm({ ...form, password: nextValue })
-              }
-            />
-            <Input
-              style={styles.input}
-              value={form.password_confirm}
-              label="Confirme sua senha"
-              placeholder="Digite sua senha novamente"
-              accessoryRight={renderIcon}
-              status={shouldCaptionRender ? "danger" : "basic"}
-              renderCaption={renderCaption}
-              secureTextEntry={secureTextEntry}
-              onChangeText={(nextValue) =>
-                setForm({ ...form, password_confirm: nextValue })
-              }
-            />
             {!loading ? (
               <Button
                 style={styles.button}
                 size="medium"
                 onPress={handleSubmit}
               >
-                Entrar
+                Enviar email de confirmação
               </Button>
             ) : (
               <Button
@@ -229,7 +145,8 @@ const styles = StyleSheet.create({
     color: "red",
   },
   form: {
-    padding: 25,
+    paddingHorizontal: 25,
+    paddingVertical: 20,
     width: "100%",
   },
   input: {

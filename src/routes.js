@@ -14,6 +14,8 @@ import {
 
 import { SignInScreen } from "src/screens/SignIn";
 import { SignUpScreen } from "src/screens/SignUp";
+import { RecoverPasswordScreen } from "src/screens/RecoverPassword";
+import { PersonalDataScreen } from "src/screens/PersonalData";
 
 import { HomeScreen } from "screens/Home";
 import { SearchScreen } from "screens/Search";
@@ -42,8 +44,8 @@ const { Navigator, Screen } = createBottomTabNavigator();
 const RootStack = createStackNavigator();
 
 const HomeIcon = (props) => <Icon {...props} name="home-outline" />;
-const SearchIcon = (props) => <Icon {...props} name="search-outline" />;
-const BulbIcon = (props) => <Icon {...props} name="bulb-outline" />;
+const VitalsIcon = (props) => <Icon {...props} name="activity-outline" />;
+const HeartIcon = (props) => <Icon {...props} name="heart-outline" />;
 const CloudIcon = (props) => <Icon {...props} name="cloud-download-outline" />;
 const PersonIcon = (props) => <Icon {...props} name="person-outline" />;
 
@@ -52,9 +54,9 @@ const BottomTabBar = ({ navigation, state }) => (
     selectedIndex={state.index}
     onSelect={(index) => navigation.navigate(state.routeNames[index])}
   >
-    <BottomNavigationTab title="Home" icon={HomeIcon} />
-    <BottomNavigationTab title="Buscar" icon={SearchIcon} />
-    <BottomNavigationTab title="Criadores" icon={BulbIcon} />
+    <BottomNavigationTab title="Calendário" icon={HomeIcon} />
+    <BottomNavigationTab title="Mamas" icon={VitalsIcon} />
+    <BottomNavigationTab title="Saúde Genital" icon={HeartIcon} />
     {/* <BottomNavigationTab title="Downloads" icon={CloudIcon} /> */}
     <BottomNavigationTab title="Perfil" icon={PersonIcon} />
   </BottomNavigation>
@@ -69,6 +71,30 @@ function TabNavigator() {
       {playlist.podcasts.length != 0 ? <TrackPlayer /> : <></>}
 
       <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
+        {/* gambiarra */}
+        <RootStack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <RootStack.Screen
+          name="SignUp"
+          component={SignUpScreen}
+          options={{ title: "" }}
+        />
+        <RootStack.Screen
+          name="Recover"
+          component={RecoverPasswordScreen}
+          options={{ title: "" }}
+        />
+        <RootStack.Screen
+          name="PersonalData"
+          component={PersonalDataScreen}
+          options={{ headerShown: false }}
+        />
+
         <Screen name="Home" component={HomeScreen} />
         <Screen name="Search" component={SearchScreen} />
         <Screen name="Creators" component={CreatorsScreen} />
@@ -154,24 +180,26 @@ export function AppNavigator() {
   const { authenticated } = useSelector((state) => state.auth);
   return (
     <NavigationContainer>
-      {/* {!authenticated ? (
-        <RootStack.Navigator>
-          <RootStack.Screen
-            name="SignIn"
-            component={SignInScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <RootStack.Screen
-            name="SignUp"
-            component={SignUpScreen}
-            options={{ title: "" }}
-          />
-        </RootStack.Navigator>
-      ) : (
-        <RootStackScreen />
-      )} */}
+      {/* <RootStack.Navigator>
+        <RootStack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <RootStack.Screen
+          name="SignUp"
+          component={SignUpScreen}
+          options={{ title: "" }}
+        />
+        <RootStack.Screen
+          name="Recover"
+          component={RecoverPasswordScreen}
+          options={{ title: "" }}
+        />
+      </RootStack.Navigator> */}
+
       <RootStackScreen />
     </NavigationContainer>
   );

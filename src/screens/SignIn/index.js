@@ -68,13 +68,13 @@ export const SignInScreen = ({ navigation }) => {
   };
 
   async function handleSubmit() {
+    navigation.navigate("PersonalData");
     // setLoading(true);
     // try {
     //   const response = await api.post("/login", {
     //     email: form.email,
     //     password: form.password,
     //   });
-
     //   dispatch(
     //     login({
     //       ...response.data.user,
@@ -93,7 +93,15 @@ export const SignInScreen = ({ navigation }) => {
           <View style={styles.header}>
             <Image source={avatarImg} style={styles.avatar} />
             <Text category="h4" style={styles.text}>
-              TINA
+              Bem-vinda ao Tina
+            </Text>
+            <Text
+              category="s1"
+              onPress={() => {
+                navigation.navigate("SignUp");
+              }}
+            >
+              Novo por aqui? Crie sua conta
             </Text>
           </View>
           <View style={styles.form}>
@@ -122,10 +130,10 @@ export const SignInScreen = ({ navigation }) => {
               category="s1"
               style={styles.singup}
               onPress={() => {
-                navigation.navigate("SignUp");
+                navigation.navigate("Recover");
               }}
             >
-              Novo por aqui? Crie sua conta
+              Esqueceu sua senha ?
             </Text>
 
             {!loading ? (
@@ -191,7 +199,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   form: {
-    padding: 15,
+    padding: 25,
     width: "100%",
   },
   input: {
