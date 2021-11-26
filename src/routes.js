@@ -19,8 +19,6 @@ import { PersonalDataScreen } from "src/screens/PersonalData";
 
 import { HomeScreen } from "screens/Home";
 import { SearchScreen } from "screens/Search";
-import { DownloadsScreen } from "screens/Downloads";
-import { CreatorsScreen } from "screens/Creators";
 import { ProfileScreen } from "screens/Profile";
 
 import { TrackDetailsScreen } from "src/screens/Details";
@@ -29,14 +27,6 @@ import { TrackPlayer } from "src/screens/TrackBottomPlayer/index";
 import { PlaylistScreen } from "screens/Playlist";
 
 import { AlbumDetailsScreen } from "screens/AlbumDetails";
-
-import { NewAlbumScreen } from "src/screens/Creators/Album/new.album";
-import { EditAlbumScreen } from "src/screens/Creators/Album/edit.album";
-
-import { AlbumPodcastEditScreen } from "src/screens/Creators/Podcast/list.album.podcasts";
-import { NewPodcastScreen } from "src/screens/Creators/Podcast/new.podcast";
-
-import { EditPodcastScreen } from "src/screens/Creators/Podcast/edit.podcast";
 
 import { ConfigurationScreen } from "screens/Profile/Configuration";
 
@@ -72,32 +62,10 @@ function TabNavigator() {
 
       <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
         {/* gambiarra */}
-        <RootStack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <RootStack.Screen
-          name="SignUp"
-          component={SignUpScreen}
-          options={{ title: "" }}
-        />
-        <RootStack.Screen
-          name="Recover"
-          component={RecoverPasswordScreen}
-          options={{ title: "" }}
-        />
-        <RootStack.Screen
-          name="PersonalData"
-          component={PersonalDataScreen}
-          options={{ headerShown: false }}
-        />
 
         <Screen name="Home" component={HomeScreen} />
         <Screen name="Search" component={SearchScreen} />
-        <Screen name="Creators" component={CreatorsScreen} />
+        {/* <Screen name="Creators" component={CreatorsScreen} /> */}
         {/* <Screen name="Downloads" component={DownloadsScreen} /> */}
         <Screen name="Profile" component={ProfileScreen} />
         <Screen name="AlbumDetails" component={AlbumDetailsScreen} />
@@ -122,50 +90,6 @@ function RootStackScreen() {
       />
 
       <RootStack.Screen
-        name="Details"
-        component={TrackDetailsScreen}
-        screenOptions={{
-          headerShown: false,
-        }}
-      />
-      <RootStack.Screen
-        name="NewAlbum"
-        component={NewAlbumScreen}
-        options={{ headerShown: false }}
-      />
-      <RootStack.Screen
-        name="EditAlbum"
-        component={EditAlbumScreen}
-        options={{ headerShown: false }}
-      />
-
-      <RootStack.Screen
-        name="NewPodcast"
-        component={NewPodcastScreen}
-        options={{ headerShown: false }}
-      />
-
-      <RootStack.Screen
-        name="EditPodcast"
-        component={EditPodcastScreen}
-        options={{ headerShown: false }}
-      />
-
-      <RootStack.Screen
-        name="AlbumPodcastEdit"
-        component={AlbumPodcastEditScreen}
-        options={{ headerShown: false }}
-      />
-
-      <RootStack.Screen
-        name="Playlist"
-        component={PlaylistScreen}
-        screenOptions={{
-          headerShown: true,
-        }}
-      />
-
-      <RootStack.Screen
         name="Configuration"
         component={ConfigurationScreen}
         screenOptions={{
@@ -180,27 +104,29 @@ export function AppNavigator() {
   const { authenticated } = useSelector((state) => state.auth);
   return (
     <NavigationContainer>
-      {/* <RootStack.Navigator>
-        <RootStack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <RootStack.Screen
-          name="SignUp"
-          component={SignUpScreen}
-          options={{ title: "" }}
-        />
-        <RootStack.Screen
-          name="Recover"
-          component={RecoverPasswordScreen}
-          options={{ title: "" }}
-        />
-      </RootStack.Navigator> */}
-
-      <RootStackScreen />
+      {!authenticated ? (
+        <RootStack.Navigator>
+          <RootStack.Screen
+            name="SignIn"
+            component={SignInScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <RootStack.Screen
+            name="SignUp"
+            component={SignUpScreen}
+            options={{ title: "" }}
+          />
+          <RootStack.Screen
+            name="Recover"
+            component={RecoverPasswordScreen}
+            options={{ title: "" }}
+          />
+        </RootStack.Navigator>
+      ) : (
+        <RootStackScreen />
+      )}
     </NavigationContainer>
   );
 }
