@@ -21,12 +21,6 @@ import { HomeScreen } from "screens/Home";
 import { SearchScreen } from "screens/Search";
 import { ProfileScreen } from "screens/Profile";
 
-import { TrackDetailsScreen } from "src/screens/Details";
-import { TrackPlayer } from "src/screens/TrackBottomPlayer/index";
-
-import { PlaylistScreen } from "screens/Playlist";
-
-import { AlbumDetailsScreen } from "screens/AlbumDetails";
 
 import { ConfigurationScreen } from "screens/Profile/Configuration";
 
@@ -53,13 +47,8 @@ const BottomTabBar = ({ navigation, state }) => (
 );
 
 function TabNavigator() {
-  const playlist = useSelector((state) => state.playlist);
-  const playback = useSelector((state) => state.playback);
-
   return (
     <>
-      {playlist.podcasts.length != 0 ? <TrackPlayer /> : <></>}
-
       <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
         {/* gambiarra */}
 
@@ -68,7 +57,7 @@ function TabNavigator() {
         {/* <Screen name="Creators" component={CreatorsScreen} /> */}
         {/* <Screen name="Downloads" component={DownloadsScreen} /> */}
         <Screen name="Profile" component={ProfileScreen} />
-        <Screen name="AlbumDetails" component={AlbumDetailsScreen} />
+        <Screen name="AlbumDetails" component={ProfileScreen} />
         {/* <Screen name="Orders" component={OrdersScreen} /> */}
       </Navigator>
     </>

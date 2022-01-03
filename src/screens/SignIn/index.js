@@ -68,22 +68,21 @@ export const SignInScreen = ({ navigation }) => {
   };
 
   async function handleSubmit() {
-    navigation.navigate("PersonalData");
-    // setLoading(true);
-    // try {
-    //   const response = await api.post("/login", {
-    //     email: form.email,
-    //     password: form.password,
-    //   });
-    //   dispatch(
-    //     login({
-    //       ...response.data.user,
-    //     })
-    //   );
-    // } catch (err) {
-    //   setLoading(false);
-    //   console.log("ERRO AO LOGAR", err);
-    // }
+    setLoading(true);
+    try {
+      const response = await api.post("/login", {
+        email: form.email,
+        password: form.password,
+      });  
+      dispatch(
+        login({
+          ...response.data.user,
+        })
+      );
+    } catch (err) {
+      setLoading(false);
+      console.log("ERRO AO LOGAR", err);
+    }
   }
 
   return (

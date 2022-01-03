@@ -12,7 +12,7 @@ import {
 
 import { Section } from "./components/section.component";
 import api from "src/services/api";
-import { useNavigationuseIsFocused } from "@react-navigation/core";
+import { useNavigation, useIsFocused } from "@react-navigation/core";
 
 import { Calendar } from "react-native-calendars";
 

@@ -75,30 +75,25 @@ export const SignUpScreen = ({ navigation }) => {
 
   async function handleSubmit() {
     setLoading(true);
-    // if (checkPassword()) {
-    //   try {
-    //     const response = await api.post("/user/create", {
-    //       email: form.email,
-    //       password: form.password,
-    //       name: form.name,
-    //       type: selectedIndex === 0 ? "Student" : "Teacher",
-    //     });
+    if (checkPassword()) {
+      try {
+        const response = await api.post("/user/create", {
+          email: form.email,
+          password: form.password,
+          name: form.name,
+        });
 
-    //     dispatch(
-    //       login({
-    //         ...response.data.user,
-    //       })
-    //     );
-    //   } catch (err) {
-    //     setLoading(false);
-    //     console.log("ERRO AO criar usuario", err);
-    //     console.log("SERVER", Constants.manifest.extra.SERVER_URL);
-        
-    //   }
-    // }
-
-    navigation.navigate("")
-
+        dispatch(
+          login({
+            ...response.data.user,
+          })
+        );
+      } catch (err) {
+        setLoading(false);
+        console.log("ERRO AO criar usuario", err);
+        console.log("SERVER", Constants.manifest.extra.SERVER_URL);
+      }
+    }
   }
 
   return (

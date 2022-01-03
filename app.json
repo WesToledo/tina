@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.tina.tina"
@@ -28,7 +28,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "SERVER_URL": "https://3592-168-196-172-65.ngrok.io"
+      "SERVER_URL": "https://da06-168-196-172-67.ngrok.io"
     }
   }
 }
