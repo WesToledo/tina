@@ -17,40 +17,6 @@ const SearchIcon = (props) => <Icon {...props} name="search-outline" />;
 import { ListCards } from "./components/list.cards.component";
 
 export const SearchScreen = ({ navigation }) => {
-  const [list, setList] = React.useState([]);
-  const [shouldRender, setShouldRender] = useState(true);
-  const [loading, setLoading] = useState(false);
-
-  const [searchTerm, setSearchTerm] = useState("");
-
-  async function getList() {
-    const text = searchTerm;
-    if (text != "") {
-      try {
-        setLoading(true);
-        const { data } = await api.post("/search/", {
-          text: text,
-        });
-        if (data.list.length > 0) {
-          setLoading(false);
-          setShouldRender(true);
-          setList(data.list);
-        } else setShouldRender(false);
-      } catch (err) {
-        setShouldRender(false);
-        setLoading(false);
-      }
-    }
-  }
-
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      getList();
-    }, 1000);
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm]);
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <Layout style={{ flex: 1 }}>
@@ -71,21 +37,6 @@ export const SearchScreen = ({ navigation }) => {
               style={styles.search_input}
             />
           </Layout>
-          {shouldRender ? (
-            <Layout style={styles.podcasts_list}>
-              {!loading ? (
-                <ListCards list={list} />
-              ) : (
-                <View style={styles.spinner}>
-                  <Spinner size="giant" />
-                </View>
-              )}
-            </Layout>
-          ) : (
-            <Text style={styles.title}>
-              Não foi encontrado nenhum resultado
-            </Text>
-          )}
         </ScrollView>
       </Layout>
     </SafeAreaView>

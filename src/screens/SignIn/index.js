@@ -17,23 +17,15 @@ import {
   Spinner,
   Icon,
 } from "@ui-kitten/components";
-import { useDispatch, useSelector } from "react-redux";
 
-import { login } from "src/store/actions/auth";
 import api from "src/services/api";
-import { auto } from "async";
+import useStore from "src/store";
 
 const AlertIcon = (props) => <Icon {...props} name="alert-circle-outline" />;
 
 const avatarImg = require("src/assets/tina.jpeg");
 
 var width = Dimensions.get("window").width;
-
-const LoadingIndicator = (props) => (
-  <View style={[props.style, styles.indicator]}>
-    <Spinner size="small" status="basic" />
-  </View>
-);
 
 export const SignInScreen = ({ navigation }) => {
   const [form, setForm] = React.useState({
@@ -43,9 +35,28 @@ export const SignInScreen = ({ navigation }) => {
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const { signin } = useStore();
 
+  async function handleSubmit() {
+    setLoading(true);
+    try {
+      const response = await api.post("/login", {
+        email: form.email,
+        password: form.password,
+      });
+
+      signin(response.data.user);
+    } catch (err) {
+      setLoading(false);
+      console.log("ERRO AO LOGAR", err);
+    }
+  }
+
+  const LoadingIndicator = (props) => (
+    <View style={[props.style, styles.indicator]}>
+      <Spinner size="small" status="basic" />
+    </View>
+  );
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
@@ -61,29 +72,11 @@ export const SignInScreen = ({ navigation }) => {
       <View style={styles.captionContainer}>
         {AlertIcon(styles.captionIcon)}
         {/* <Text style={styles.captionText}>
-          Deve conter pelo menos 8 caracteres
-        </Text> */}
+        Deve conter pelo menos 8 caracteres
+      </Text> */}
       </View>
     );
   };
-
-  async function handleSubmit() {
-    setLoading(true);
-    try {
-      const response = await api.post("/login", {
-        email: form.email,
-        password: form.password,
-      });  
-      dispatch(
-        login({
-          ...response.data.user,
-        })
-      );
-    } catch (err) {
-      setLoading(false);
-      console.log("ERRO AO LOGAR", err);
-    }
-  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

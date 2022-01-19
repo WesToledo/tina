@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.1.0",
-    "@react-native-async-storage/async-storage": "^1.13.0",
+    "@react-native-async-storage/async-storage": "^1.15.15",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/slider": "^3.0.3",
     "@react-navigation/bottom-tabs": "^5.11.11",
@@ -40,7 +40,8 @@
     "react-native-svg": "12.1.0",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.4",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "zustand": "^3.6.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

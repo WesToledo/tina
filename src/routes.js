@@ -21,8 +21,8 @@ import { HomeScreen } from "screens/Home";
 import { SearchScreen } from "screens/Search";
 import { ProfileScreen } from "screens/Profile";
 
-
 import { ConfigurationScreen } from "screens/Profile/Configuration";
+import useStore from "./store";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const RootStack = createStackNavigator();
@@ -65,6 +65,10 @@ function TabNavigator() {
 }
 
 function RootStackScreen() {
+  const user = useStore((state) => state.user);
+
+  console.warn(user);
+
   return (
     <RootStack.Navigator
       mode="modal"
@@ -72,25 +76,38 @@ function RootStackScreen() {
         headerShown: false,
       }}
     >
-      <RootStack.Screen
-        name="Main"
-        component={TabNavigator}
-        options={{ headerShown: false }}
-      />
+      {true ? (
+        <>
+          <RootStack.Screen
+            name="Main"
+            component={TabNavigator}
+            options={{ headerShown: false }}
+          />
 
-      <RootStack.Screen
-        name="Configuration"
-        component={ConfigurationScreen}
-        screenOptions={{
-          headerShown: true,
-        }}
-      />
+          <RootStack.Screen
+            name="Configuration"
+            component={ConfigurationScreen}
+            screenOptions={{
+              headerShown: true,
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <RootStack.Screen
+            name="PersonalData"
+            component={PersonalDataScreen}
+            options={{ title: "" }}
+          />
+        </>
+      )}
     </RootStack.Navigator>
   );
 }
 
 export function AppNavigator() {
-  const { authenticated } = useSelector((state) => state.auth);
+  const authenticated = useStore((state) => state.authenticated);
+
   return (
     <NavigationContainer>
       {!authenticated ? (

@@ -1,19 +1,55 @@
-import { createStore, applyMiddleware } from "redux";
-
-//Redux-persist
-import { persistReducer, REHYDRATE } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import create from "zustand";
+import { persist, devtools } from "zustand/middleware";
 
-import reducers from "./reducers";
+import produce from "immer";
 
-const middlewares = [];
-
-const persistConfig = {
-  key: "root",
-  storage: AsyncStorage,
-  whitelist: ["auth", "playlist", "controller"],
+const persistStore = {
+  name: "state",
+  getStorage: () => AsyncStorage, // (optional) by default the 'localStorage' is used
 };
-const persistedReducer = persistReducer(persistConfig, reducers);
-let store = createStore(persistedReducer);
 
-export default store;
+const store = (set, get) => ({
+  // CONFIG APP
+
+  authenticated: false,
+
+  // USER
+  user: {
+    name: null,
+    email: null,
+    birthday: null,
+    password: null,
+    clinical_data: {
+      aswered: false,
+      cancer_cases_in_family: [
+        // {
+        //   parent_level: null,
+        //   age: null,
+        // },
+      ],
+      mammography: {
+        has_done_this_year: null,
+        year: null,
+      },
+    },
+  },
+
+  signin: (user) =>
+    set(
+      produce((oldState) => {
+        oldState.user = user;
+        oldState.authenticated = true;
+      })
+    ),
+  signout: () =>
+    set(
+      produce((oldState) => {
+        oldState.authenticated = false;
+      })
+    ),
+});
+
+const useStore = create(devtools(persist(store, persistStore)));
+
+export default useStore;

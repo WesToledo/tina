@@ -44,8 +44,6 @@ export const SignUpScreen = ({ navigation }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
-
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
@@ -83,11 +81,11 @@ export const SignUpScreen = ({ navigation }) => {
           name: form.name,
         });
 
-        dispatch(
-          login({
-            ...response.data.user,
-          })
-        );
+        // dispatch(
+        //   login({
+        //     ...response.data.user,
+        //   })
+        // );
       } catch (err) {
         setLoading(false);
         console.log("ERRO AO criar usuario", err);

@@ -38,8 +38,6 @@ export const RecoverPasswordScreen = ({ navigation }) => {
   });
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
-
   async function handleSubmit() {
     setLoading(true);
     // if (checkPassword()) {
@@ -60,7 +58,7 @@ export const RecoverPasswordScreen = ({ navigation }) => {
     //     setLoading(false);
     //     console.log("ERRO AO criar usuario", err);
     //     console.log("SERVER", Constants.manifest.extra.SERVER_URL);
-        
+
     //   }
     // }
   }

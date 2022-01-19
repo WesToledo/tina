@@ -15,19 +15,19 @@ import {
   Button,
 } from "@ui-kitten/components";
 
-import { logout } from "actions/auth";
 import { useNavigation } from "@react-navigation/core";
+import useStore from "src/store";
 
 const SettingsIcon = (props) => <Icon {...props} name="settings-2" />;
 const LogOutIcon = (props) => <Icon {...props} name="log-out" />;
 
 export const ProfileScreen = () => {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { user } = useSelector((state) => state.auth);
+
+  const { signout, user } = useStore();
 
   function handleLogOut() {
-    dispatch(logout());
+    signout();
   }
 
   return (
