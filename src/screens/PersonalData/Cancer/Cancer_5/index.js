@@ -17,13 +17,6 @@ import {
   Spinner,
   Input,
 } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
-
-import Constants from "expo-constants";
-
-import api from "src/services/api";
-
-import { login } from "actions/auth";
 
 const tina2 = require("./tina2.png");
 
@@ -36,8 +29,6 @@ const LoadingIndicator = (props) => (
 export const Cancer_5 = ({ navigation, handleNextScreen }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
-
-  const dispatch = useDispatch();
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>

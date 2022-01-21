@@ -18,13 +18,6 @@ import {
   Input,
   Icon,
 } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
-
-import Constants from "expo-constants";
-
-import api from "src/services/api";
-
-import { login } from "actions/auth";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -33,46 +26,59 @@ const LoadingIndicator = (props) => (
 );
 
 export const Cancer_1 = ({ navigation, handleNextScreen }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(1);
   const [loading, setLoading] = useState(false);
-
-  const dispatch = useDispatch();
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
       <Layout style={styles.content}>
         <View style={styles.header}>
-          <Text category="h4" style={styles.text}>
+          <Text category="h2" style={styles.text}>
             Dados Clínicos
           </Text>
 
-          <Text category="s1" style={styles.subtitle}>
-            A seguir preencha corretamente o que se pede, para ter uma melhor
-            experiência ao usar o TINA
+          <Text category="h6" style={styles.subtitle}>
+            Vamos fazer algumas perguntas sobre você nas próximas telas.
+            Responda da maneira que achar mais confortável.
           </Text>
         </View>
         <View style={styles.form}>
-          <Text category="s1">Há casos de câncer de mama na família ?</Text>
+          <Text category="h6">Há casos de câncer de mama na família ?</Text>
           <RadioGroup
             selectedIndex={selectedIndex}
             onChange={(index) => setSelectedIndex(index)}
             style={{
-              flexDirection: "column",
+              flexDirection: "row",
               justifyContent: "space-around",
               alignContent: "center",
               marginTop: 15,
               marginBottom: 15,
             }}
           >
-            <Radio>Sim</Radio>
-            <Radio>Não</Radio>
+            <Radio>
+              {(evaProps) => (
+                <Text {...evaProps} style={styles.checkbox}>
+                  Sim
+                </Text>
+              )}
+            </Radio>
+            <Radio>
+              {(evaProps) => (
+                <Text {...evaProps} style={styles.checkbox}>
+                  Não
+                </Text>
+              )}
+            </Radio>
           </RadioGroup>
 
           {!loading ? (
             <Button
               style={styles.button}
               size="medium"
-              onPress={handleNextScreen}
+              onPress={() => {
+                // se tem parentesco com câncer de mama
+                if (selectedIndex == 0) handleNextScreen(1);
+              }}
             >
               Próximo
             </Button>
@@ -97,25 +103,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#670D73",
   },
   text: {
-    padding: 10,
+    paddingTop: 30,
     fontWeight: "bold",
   },
   subtitle: {
-    paddingHorizontal: 25,
+    marginTop: 20,
+    paddingHorizontal: 20,
+    textAlign: "center",
   },
   content: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     borderRadius: 5,
-    width: "75%",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    width: "90%",
   },
   header: {
     justifyContent: "center",
     alignItems: "center",
   },
   form: {
-    padding: 25,
+    padding: 30,
     width: "100%",
   },
   input: {
@@ -124,5 +130,9 @@ const styles = StyleSheet.create({
   button: {
     // marginVertical: 15,
     // marginBottom: 15,
+  },
+  checkbox: {
+    fontSize: 20,
+    padding: 5,
   },
 });

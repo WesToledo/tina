@@ -18,13 +18,6 @@ import {
   Input,
   CheckBox,
 } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
-
-import Constants from "expo-constants";
-
-import api from "src/services/api";
-
-import { login } from "actions/auth";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -36,18 +29,16 @@ export const Cancer_3 = ({ navigation, handleNextScreen }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
-
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
       <Layout style={styles.content}>
         <View style={styles.header}>
-          <Text category="h4" style={styles.text}>
+          <Text category="h2" style={styles.text}>
             Dados Clínicos
           </Text>
         </View>
         <View style={styles.form}>
-          <Text category="s1">
+          <Text category="h6">
             Com quantos anos o câncer de mama se manifestou no seu familiar ?
           </Text>
 
@@ -72,7 +63,11 @@ export const Cancer_3 = ({ navigation, handleNextScreen }) => {
           </View>
 
           {!loading ? (
-            <Button style={styles.button} size="medium" onPress={handleNextScreen}>
+            <Button
+              style={styles.button}
+              size="medium"
+              onPress={handleNextScreen}
+            >
               Próximo
             </Button>
           ) : (
@@ -96,32 +91,32 @@ const styles = StyleSheet.create({
     backgroundColor: "#670D73",
   },
   text: {
-    padding: 10,
+    paddingTop: 30,
     fontWeight: "bold",
   },
   subtitle: {
     paddingHorizontal: 25,
+    textAlign: "center",
   },
   content: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     borderRadius: 5,
-    width: "75%",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    width: "90%",
   },
   header: {
     justifyContent: "center",
     alignItems: "center",
   },
   form: {
-    padding: 25,
+    padding: 30,
     width: "100%",
   },
   input: {
     marginVertical: 8,
   },
-  checkbox: {
-    paddingVertical: 5,
+  button: {
+    // marginVertical: 15,
+    // marginBottom: 15,
   },
   checkbox: {
     paddingVertical: 5,

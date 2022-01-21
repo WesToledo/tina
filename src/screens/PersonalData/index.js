@@ -17,7 +17,6 @@ import {
   Spinner,
   Input,
 } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
 
 import Constants from "expo-constants";
 import api from "src/services/api";
@@ -40,15 +39,53 @@ export const PersonalDataScreen = ({ navigation }) => {
   const [screenIndex, setScreenIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const [clinicalData, setClinicalData] = useState({
+    cancer_cases_in_family: [
+      // {
+      //   parent_level: {
+      //     type: String,
+      //   },
+      //   age: {
+      //     type: Number,
+      //   },
+      // },
+    ],
+    mammography: [
+      // {
+      //   has_done_this_year: {
+      //     type: Boolean,
+      //     required: true,
+      //   },
+      //   year: {
+      //     type: String,
+      //     required: true,
+      //   },
+      // },
+    ],
+  });
   const screens = {
+    // dados clinicos
     0: <Cancer_1 handleNextScreen={handleNextScreen} />,
-    1: <Cancer_2 handleNextScreen={handleNextScreen} />,
-    2: <Cancer_3 handleNextScreen={handleNextScreen} />,
+    // graus de parentesco
+    1: (
+      <Cancer_2
+        handleNextScreen={handleNextScreen}
+        setClinicalData={setClinicalData}
+        clinicalData={clinicalData}
+      />
+    ),
+    // form idade parente
+    2: (
+      <Cancer_3
+        handleNextScreen={handleNextScreen}
+        setClinicalData={setClinicalData}
+        clinicalData={clinicalData}
+      />
+    ),
+
     3: <Cancer_4 handleNextScreen={handleNextScreen} />,
     4: <Cancer_5 handleNextScreen={handleNextScreen} />,
   };
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (screenIndex == 5) {
@@ -61,8 +98,8 @@ export const PersonalDataScreen = ({ navigation }) => {
     navigation.navigate("Home");
   }
 
-  function handleNextScreen() {
-    setScreenIndex(screenIndex + 1);
+  function handleNextScreen(index) {
+    setScreenIndex(screenIndex + index);
   }
 
   return (

@@ -45,7 +45,9 @@ export const SignInScreen = ({ navigation }) => {
         password: form.password,
       });
 
-      signin(response.data.user);
+      signin(response.data.user, false);
+      setLoading(false);
+      navigation.navigate("PersonalData");
     } catch (err) {
       setLoading(false);
       console.log("ERRO AO LOGAR", err);

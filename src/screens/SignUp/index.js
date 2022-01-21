@@ -17,14 +17,14 @@ import {
   Spinner,
   Input,
   Icon,
+  Datepicker,
+  CalendarViewModes,
 } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
 
 import Constants from "expo-constants";
 
 import api from "src/services/api";
-
-import { login } from "actions/auth";
+import useStore from "src/store";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -33,15 +33,17 @@ const LoadingIndicator = (props) => (
 );
 
 export const SignUpScreen = ({ navigation }) => {
+  const { signin } = useStore();
+
   const [form, setForm] = useState({
     email: null,
     password: null,
     name: null,
     password_confirm: null,
+    date: new Date(),
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [shouldCaptionRender, setShouldCaptionRender] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const toggleSecureEntry = () => {
@@ -79,13 +81,12 @@ export const SignUpScreen = ({ navigation }) => {
           email: form.email,
           password: form.password,
           name: form.name,
+          birthday: form.date.toISOString(),
         });
 
-        // dispatch(
-        //   login({
-        //     ...response.data.user,
-        //   })
-        // );
+        signin(response.data.user, false);
+
+        navigation.navigate("PersonalData");
       } catch (err) {
         setLoading(false);
         console.log("ERRO AO criar usuario", err);
@@ -96,6 +97,9 @@ export const SignUpScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <Text category="h4" style={styles.title}>
+        Buscar
+      </Text>
       <KeyboardAvoidingView behavior="height" style={styles.container}>
         <Layout style={styles.content}>
           <View style={styles.header}>
@@ -137,6 +141,15 @@ export const SignUpScreen = ({ navigation }) => {
               <Radio>Estudante</Radio>
               <Radio>Professor</Radio>
             </RadioGroup> */}
+
+            <Datepicker
+              style={styles.input}
+              label="Data de nascimento"
+              date={form.date}
+              onSelect={(nextDate) => setForm({ ...form, date: nextDate })}
+              startView={CalendarViewModes.YEAR}
+              min={new Date(1900, 0, 0)}
+            />
             <Input
               style={styles.input}
               value={form.password}
@@ -192,6 +205,10 @@ const styles = StyleSheet.create({
   },
   text: {
     padding: 10,
+    fontWeight: "bold",
+  },
+  title: {
+    marginLeft: 15,
     fontWeight: "bold",
   },
   content: {

@@ -65,9 +65,13 @@ function TabNavigator() {
 }
 
 function RootStackScreen() {
-  const user = useStore((state) => state.user);
+  const state = useStore();
 
-  console.warn(user);
+  console.log(state);
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   return (
     <RootStack.Navigator
@@ -93,13 +97,7 @@ function RootStackScreen() {
           />
         </>
       ) : (
-        <>
-          <RootStack.Screen
-            name="PersonalData"
-            component={PersonalDataScreen}
-            options={{ title: "" }}
-          />
-        </>
+        <></>
       )}
     </RootStack.Navigator>
   );
@@ -128,6 +126,11 @@ export function AppNavigator() {
             name="Recover"
             component={RecoverPasswordScreen}
             options={{ title: "" }}
+          />
+          <RootStack.Screen
+            name="PersonalData"
+            component={PersonalDataScreen}
+            options={{ title: "", headerShown: false }}
           />
         </RootStack.Navigator>
       ) : (

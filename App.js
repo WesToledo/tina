@@ -5,8 +5,6 @@ import { default as theme } from "./custom-theme.json";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { AppNavigator } from "src/routes.js";
 
-import { Provider } from "react-redux";
-
 export default () => (
   <>
     <IconRegistry icons={EvaIconsPack} />

@@ -9,6 +9,21 @@ const persistStore = {
   getStorage: () => AsyncStorage, // (optional) by default the 'localStorage' is used
 };
 
+const INITIAL_USER = {
+  name: null,
+  email: null,
+  birthday: null,
+  password: null,
+  clinical_data: {
+    aswered: false,
+    cancer_cases_in_family: [],
+    mammography: {
+      has_done_this_year: null,
+      year: null,
+    },
+  },
+};
+
 const store = (set, get) => ({
   // CONFIG APP
 
@@ -16,35 +31,20 @@ const store = (set, get) => ({
 
   // USER
   user: {
-    name: null,
-    email: null,
-    birthday: null,
-    password: null,
-    clinical_data: {
-      aswered: false,
-      cancer_cases_in_family: [
-        // {
-        //   parent_level: null,
-        //   age: null,
-        // },
-      ],
-      mammography: {
-        has_done_this_year: null,
-        year: null,
-      },
-    },
+    ...INITIAL_USER,
   },
 
-  signin: (user) =>
+  signin: (user, authentication) =>
     set(
       produce((oldState) => {
         oldState.user = user;
-        oldState.authenticated = true;
+        oldState.authenticated = authentication;
       })
     ),
   signout: () =>
     set(
       produce((oldState) => {
+        oldState.user = INITIAL_USER;
         oldState.authenticated = false;
       })
     ),
