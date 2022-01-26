@@ -48,6 +48,15 @@ const store = (set, get) => ({
         oldState.authenticated = false;
       })
     ),
+  addClinicalData: (clinical_data) =>
+    set(
+      produce((oldState) => {
+        oldState.user.clinical_data.cancer_cases_in_family = [
+          ...oldState.user.clinical_data.cancer_cases_in_family,
+          clinical_data.cancer_cases_in_family[0],
+        ];
+      })
+    ),
 });
 
 const useStore = create(devtools(persist(store, persistStore)));

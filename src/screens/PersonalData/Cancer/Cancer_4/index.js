@@ -31,7 +31,6 @@ export const Cancer_4 = ({ navigation, handleNextScreen }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
-
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
       <View style={styles.content}>
@@ -48,7 +47,7 @@ export const Cancer_4 = ({ navigation, handleNextScreen }) => {
         style={styles.button}
         status="control"
         size="medium"
-        onPress={handleNextScreen}
+        onPress={() => handleNextScreen(1)}
       >
         Próximo
       </Button>

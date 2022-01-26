@@ -20,15 +20,13 @@ import {
 
 const tina2 = require("./tina2.png");
 
-const LoadingIndicator = (props) => (
-  <View style={[props.style, styles.indicator]}>
-    <Spinner size="small" status="basic" />
-  </View>
-);
-
-export const Cancer_5 = ({ navigation, handleNextScreen }) => {
+export const Cancer_5 = ({ navigation }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  function handleNextScreen() {
+    navigation.navigate("Mamografia");
+  }
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>

@@ -18,6 +18,7 @@ import {
   Input,
   CheckBox,
 } from "@ui-kitten/components";
+import useStore from "src/store";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -25,9 +26,25 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-export const Cancer_3 = ({ navigation, handleNextScreen }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+export const Cancer_3 = ({ navigation, handleNextScreen, clinicalData }) => {
+  const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [years, setYears] = useState(null);
+
+  const { addClinicalData } = useStore();
+
+  function handleSubmit() {
+    addClinicalData({
+      cancer_cases_in_family: [
+        {
+          parent_level: clinicalData.cancer_cases_in_family[0].parent_level,
+          age: years !== null && !checked ? years : 0,
+        },
+      ],
+    });
+
+    handleNextScreen(1);
+  }
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
@@ -44,10 +61,10 @@ export const Cancer_3 = ({ navigation, handleNextScreen }) => {
 
           <Input
             style={styles.input}
-            // value={form.name}
+            value={years}
             label="Anos"
             placeholder=""
-            // onChangeText={(nextValue) => setForm({ ...form, name: nextValue })}
+            onChangeText={(nextValue) => setYears(nextValue)}
           />
 
           <View
@@ -59,15 +76,20 @@ export const Cancer_3 = ({ navigation, handleNextScreen }) => {
               marginBottom: 15,
             }}
           >
-            <CheckBox style={styles.checkbox}>Não sei</CheckBox>
+            <CheckBox
+              checked={checked}
+              style={styles.checkbox}
+              onChange={() => {
+                setChecked(!checked);
+                setYears(null);
+              }}
+            >
+              Não sei
+            </CheckBox>
           </View>
 
           {!loading ? (
-            <Button
-              style={styles.button}
-              size="medium"
-              onPress={handleNextScreen}
-            >
+            <Button style={styles.button} size="medium" onPress={handleSubmit}>
               Próximo
             </Button>
           ) : (

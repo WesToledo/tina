@@ -15,7 +15,7 @@ import {
 import { SignInScreen } from "src/screens/SignIn";
 import { SignUpScreen } from "src/screens/SignUp";
 import { RecoverPasswordScreen } from "src/screens/RecoverPassword";
-import { PersonalDataScreen } from "src/screens/PersonalData";
+import { CancerQuestionsScreen } from "src/screens/PersonalData/Cancer";
 
 import { HomeScreen } from "screens/Home";
 import { SearchScreen } from "screens/Search";
@@ -67,11 +67,7 @@ function TabNavigator() {
 function RootStackScreen() {
   const state = useStore();
 
-  console.log(state);
-
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
+  console.log("asdasads", state);
 
   return (
     <RootStack.Navigator
@@ -129,7 +125,7 @@ export function AppNavigator() {
           />
           <RootStack.Screen
             name="PersonalData"
-            component={PersonalDataScreen}
+            component={CancerQuestionsScreen}
             options={{ title: "", headerShown: false }}
           />
         </RootStack.Navigator>

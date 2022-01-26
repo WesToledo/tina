@@ -40,6 +40,19 @@ export const Cancer_2 = ({
     handleNextScreen(-1);
   }
 
+  function handleSubmit() {
+    setClinicalData({
+      ...clinicalData,
+      cancer_cases_in_family: [
+        {
+          parent_level: checked,
+          age: 0,
+        },
+      ],
+    });
+    handleNextScreen(1);
+  }
+
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
       <Layout style={styles.content}>
@@ -129,13 +142,7 @@ export const Cancer_2 = ({
           </View>
 
           {!loading ? (
-            <Button
-              style={styles.button}
-              size="medium"
-              onPress={() => {
-                handleNextScreen(1);
-              }}
-            >
+            <Button style={styles.button} size="medium" onPress={handleSubmit}>
               Próximo
             </Button>
           ) : (
