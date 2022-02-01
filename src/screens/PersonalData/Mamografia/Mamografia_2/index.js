@@ -19,12 +19,6 @@ import {
 } from "@ui-kitten/components";
 import { useDispatch } from "react-redux";
 
-import Constants from "expo-constants";
-
-import api from "src/services/api";
-
-import { login } from "actions/auth";
-
 const tina1 = require("./tina1.png");
 
 const LoadingIndicator = (props) => (
@@ -33,11 +27,9 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-export const Mamografia_2 = ({ navigation, handleNextScreen }) => {
+export const Mamografia_2 = ({ handleNextScreen }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
-
-  const dispatch = useDispatch();
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
@@ -55,7 +47,7 @@ export const Mamografia_2 = ({ navigation, handleNextScreen }) => {
         style={styles.button}
         status="control"
         size="medium"
-        onPress={handleNextScreen}
+        onPress={() => handleNextScreen(1)}
       >
         Próximo
       </Button>

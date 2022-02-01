@@ -8,6 +8,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import {
   Button,
   Radio,
@@ -20,9 +21,10 @@ import {
 
 const tina2 = require("./tina2.png");
 
-export const Cancer_5 = ({ navigation }) => {
+export const Cancer_5 = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
 
   function handleNextScreen() {
     navigation.navigate("Mamografia");

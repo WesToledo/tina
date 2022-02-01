@@ -8,6 +8,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import {
   Button,
   Radio,
@@ -17,13 +18,6 @@ import {
   Spinner,
   Input,
 } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
-
-import Constants from "expo-constants";
-
-import api from "src/services/api";
-
-import { login } from "actions/auth";
 
 const tina2 = require("./tina2.png");
 
@@ -33,11 +27,15 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-export const Mamografia_3 = ({ navigation, handleNextScreen }) => {
+export const Mamografia_3 = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  function handleNextScreen() {
+    navigation.navigate("Home");
+  }
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
@@ -55,7 +53,7 @@ export const Mamografia_3 = ({ navigation, handleNextScreen }) => {
         style={styles.button}
         status="control"
         size="medium"
-        onPress={handleNextScreen}
+        onPress={() => handleNextScreen(1)}
       >
         Próximo
       </Button>

@@ -18,13 +18,6 @@ import {
   Input,
   Icon,
 } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
-
-import Constants from "expo-constants";
-
-import api from "src/services/api";
-
-import { login } from "actions/auth";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -32,11 +25,9 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-export const Mamografia_1 = ({ navigation, handleNextScreen }) => {
+export const Mamografia_1 = ({ handleNextScreen }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
-
-  const dispatch = useDispatch();
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
@@ -72,7 +63,7 @@ export const Mamografia_1 = ({ navigation, handleNextScreen }) => {
             <Button
               style={styles.button}
               size="medium"
-              onPress={handleNextScreen}
+              onPress={() => handleNextScreen(1)}
             >
               Próximo
             </Button>

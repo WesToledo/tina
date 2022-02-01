@@ -16,6 +16,7 @@ import { SignInScreen } from "src/screens/SignIn";
 import { SignUpScreen } from "src/screens/SignUp";
 import { RecoverPasswordScreen } from "src/screens/RecoverPassword";
 import { CancerQuestionsScreen } from "src/screens/PersonalData/Cancer";
+import { MamografiaQuestionsScreen } from "src/screens/PersonalData/Mamografia";
 
 import { HomeScreen } from "screens/Home";
 import { SearchScreen } from "screens/Search";
@@ -126,6 +127,11 @@ export function AppNavigator() {
           <RootStack.Screen
             name="PersonalData"
             component={CancerQuestionsScreen}
+            options={{ title: "", headerShown: false }}
+          />
+          <RootStack.Screen
+            name="Mamografia"
+            component={MamografiaQuestionsScreen}
             options={{ title: "", headerShown: false }}
           />
         </RootStack.Navigator>
