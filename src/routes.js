@@ -19,7 +19,8 @@ import { CancerQuestionsScreen } from "src/screens/PersonalData/Cancer";
 import { MamografiaQuestionsScreen } from "src/screens/PersonalData/Mamografia";
 
 import { HomeScreen } from "screens/Home";
-import { SearchScreen } from "screens/Search";
+import { MamaScreen } from "src/screens/Mamas";
+import { GenitalScreen } from "src/screens/Genital";
 import { ProfileScreen } from "screens/Profile";
 
 import { ConfigurationScreen } from "screens/Profile/Configuration";
@@ -51,13 +52,11 @@ function TabNavigator() {
   return (
     <>
       <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
-        {/* gambiarra */}
-
         <Screen name="Home" component={HomeScreen} />
-        <Screen name="Search" component={SearchScreen} />
+        <Screen name="Mama" component={MamaScreen} />
         {/* <Screen name="Creators" component={CreatorsScreen} /> */}
         {/* <Screen name="Downloads" component={DownloadsScreen} /> */}
-        <Screen name="Profile" component={ProfileScreen} />
+        <Screen name="Genital" component={GenitalScreen} />
         <Screen name="AlbumDetails" component={ProfileScreen} />
         {/* <Screen name="Orders" component={OrdersScreen} /> */}
       </Navigator>
@@ -84,7 +83,6 @@ function RootStackScreen() {
             component={TabNavigator}
             options={{ headerShown: false }}
           />
-
           <RootStack.Screen
             name="Configuration"
             component={ConfigurationScreen}

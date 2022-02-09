@@ -48,6 +48,13 @@ const store = (set, get) => ({
         oldState.authenticated = false;
       })
     ),
+  authenticate: () =>
+    set(
+      produce((oldState) => {
+        oldState.authenticated = true;
+      })
+    ),
+
   addClinicalData: (clinical_data) =>
     set(
       produce((oldState) => {

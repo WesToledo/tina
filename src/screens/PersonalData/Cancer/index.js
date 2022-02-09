@@ -53,14 +53,8 @@ export const CancerQuestionsScreen = ({ navigation }) => {
     ),
 
     3: <Cancer_4 handleNextScreen={handleNextScreen} />,
-    4: <Cancer_5 handleNextScreen={handleNextScreen} />,
+    4: <Cancer_5 />,
   };
-
-  useEffect(() => {
-    if (screenIndex == 5) {
-      navigation.navigate("Home");
-    }
-  }, [screenIndex]);
 
   function handleNextScreen(index) {
     setScreenIndex(screenIndex + index);

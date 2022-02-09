@@ -97,9 +97,6 @@ export const SignUpScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text category="h4" style={styles.title}>
-        Buscar
-      </Text>
       <KeyboardAvoidingView behavior="height" style={styles.container}>
         <Layout style={styles.content}>
           <View style={styles.header}>

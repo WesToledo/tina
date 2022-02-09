@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import useStore from "src/store";
 import {
   Button,
   Radio,
@@ -21,19 +22,16 @@ import {
 
 const tina2 = require("./tina2.png");
 
-const LoadingIndicator = (props) => (
-  <View style={[props.style, styles.indicator]}>
-    <Spinner size="small" status="basic" />
-  </View>
-);
-
 export const Mamografia_3 = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const { authenticate } = useStore();
+
   const navigation = useNavigation();
 
   function handleNextScreen() {
+    authenticate();
     navigation.navigate("Home");
   }
 
@@ -53,7 +51,7 @@ export const Mamografia_3 = (props) => {
         style={styles.button}
         status="control"
         size="medium"
-        onPress={() => handleNextScreen(1)}
+        onPress={handleNextScreen}
       >
         Próximo
       </Button>

@@ -6,10 +6,10 @@ import {
   Dimensions,
   TouchableHighlight,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
 
-import { Icon, Text, Button } from "@ui-kitten/components";
+import { Icon, Text, Button, Card } from "@ui-kitten/components";
+import img from "src/assets/thumb.png";
 
 var width = Dimensions.get("window").width;
 
@@ -17,44 +17,35 @@ const DownloadIcon = (props) => (
   <Icon {...props} name="cloud-download-outline" />
 );
 
-export const CardAlbum = ({
-  _id,
-  title,
-  description,
-  image_source,
-  podcasts,
-  author,
-}) => {
+export const CardPodcast = () => {
   const navigation = useNavigation();
-  const playback = useSelector((state) => state.playback);
 
   return (
     <View style={styles.content}>
-      <TouchableHighlight
+      {/* <TouchableHighlight
         style={styles.image_container}
         activeOpacity={0.6}
         underlayColor="#DDDDDD"
-        onPress={() => {
-          navigation.navigate("AlbumDetails", {
-            _id,
-            title,
-            description,
-            author,
-            image_source,
-            podcasts,
-          });
-        }}
       >
-        <Image
-          source={{
-            uri: image_source,
-          }}
-          style={styles.thumb}
-        />
-      </TouchableHighlight>
-      <View>
+        <Image source={img} style={styles.thumb} />
+      </TouchableHighlight> */}
+
+      <Card
+        status="primary"
+        style={styles.card}
+        header={
+          <View>
+            <Text category="h6">Corrimento Encontrado</Text>
+            <Text category="s1">12/10/2010</Text>
+          </View>
+        }
+      >
+        <Text>Coceira e cor avermelhada</Text>
+      </Card>
+
+      {/* <View>
         <Text numberOfLines={3} style={styles.thumb_text} category="s1">
-          {title}
+          tituloo
         </Text>
         <Text
           numberOfLines={2}
@@ -62,9 +53,9 @@ export const CardAlbum = ({
           category="s1"
           appearance="hint"
         >
-          {description}
+          descricao
         </Text>
-      </View>
+      </View> */}
       {/* <View style={styles.button_container}>
         <Button
           style={styles.button}
@@ -80,29 +71,12 @@ export const CardAlbum = ({
 
 const styles = StyleSheet.create({
   content: {
-    flexDirection: "row",
+    width: "100%",
     marginVertical: 5,
-  },
-  button_container: {
-    width: width - width * 0.5,
-    flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
   },
-  image_container: {
-    width: 80,
-    height: 80,
-    marginRight: 10,
-  },
-  thumb: {
-    width: 80,
-    height: 80,
-  },
-  thumb_text: {
-    margin: 5,
-    fontWeight: "700",
-    width: width - width * 0.5,
+  card: {
+    width: "100%",
   },
 });
 

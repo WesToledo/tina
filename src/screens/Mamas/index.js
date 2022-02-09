@@ -10,23 +10,21 @@ import {
 } from "@ui-kitten/components";
 import Constants from "expo-constants";
 
-import api from "src/services/api";
-
-const SearchIcon = (props) => <Icon {...props} name="search-outline" />;
+import MainHeader from "src/components/MainHeader";
 
 import { ListCards } from "./components/list.cards.component";
 
-export const SearchScreen = ({ navigation }) => {
+export const MamaScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Layout style={{ flex: 1 }}>
-        <TopNavigation title="" alignment="center" />
+        <MainHeader />
 
         <ScrollView>
           <Text category="h4" style={styles.title}>
-            Buscar
+            Saúde das Mamas
           </Text>
-          <Layout style={{ flex: 1 }}>
+          {/* <Layout style={{ flex: 1 }}>
             <Input
               label=""
               autoComplete="off"
@@ -36,7 +34,8 @@ export const SearchScreen = ({ navigation }) => {
               onChangeText={(text) => setSearchTerm(text)}
               style={styles.search_input}
             />
-          </Layout>
+          </Layout> */}
+          <ListCards />
         </ScrollView>
       </Layout>
     </SafeAreaView>

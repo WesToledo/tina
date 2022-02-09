@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, ScrollView, Dimensions } from "react-native";
 import Constants from "expo-constants";
-import {
-  Layout,
-  TopNavigation,
-  TopNavigationAction,
-  Icon,
-  Spinner,
-  Avatar,
-} from "@ui-kitten/components";
+import { Layout, TopNavigation, Icon, Avatar } from "@ui-kitten/components";
 
-import { Section } from "./components/section.component";
-import api from "src/services/api";
-import { useNavigation, useIsFocused } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/core";
 
 import { Calendar } from "react-native-calendars";
+
+import MainHeader from "src/components/MainHeader";
 
 var height = Dimensions.get("window").height;
 
@@ -26,13 +19,7 @@ export const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Layout style={{ flex: 1 }}>
-        <TopNavigation
-          title="TINA"
-          alignment="left"
-          accessoryRight={() => (
-            <Avatar size="large" source={require("src/assets/tina.jpeg")} />
-          )}
-        />
+        <MainHeader />
         <Calendar
           // Collection of dates that have to be marked. Default = {}
           markedDates={{

@@ -8,6 +8,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from "react-native";
+import useStore from "src/store";
 import {
   Button,
   Radio,
@@ -28,6 +29,8 @@ const LoadingIndicator = (props) => (
 export const Cancer_1 = ({ navigation, handleNextScreen }) => {
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  const { authenticate } = useStore();
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
@@ -78,6 +81,7 @@ export const Cancer_1 = ({ navigation, handleNextScreen }) => {
               onPress={() => {
                 // se tem parentesco com câncer de mama
                 if (selectedIndex == 0) handleNextScreen(1);
+                else authenticate();
               }}
             >
               Próximo
