@@ -23,7 +23,7 @@ import useStore from "src/store";
 
 const AlertIcon = (props) => <Icon {...props} name="alert-circle-outline" />;
 
-const avatarImg = require("src/assets/tina.jpeg");
+const avatarImg = require("src/assets/LOGO.png");
 
 var width = Dimensions.get("window").width;
 
@@ -176,6 +176,7 @@ const styles = StyleSheet.create({
     height: width * 0.3,
     marginTop: "-20%",
     borderRadius: 100,
+    backgroundColor: "#fff",
   },
   captionContainer: {
     display: "flex",

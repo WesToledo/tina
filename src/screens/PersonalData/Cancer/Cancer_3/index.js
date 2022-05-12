@@ -26,22 +26,25 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-export const Cancer_3 = ({ navigation, handleNextScreen, clinicalData }) => {
+export const Cancer_3 = ({ navigation, handleNextScreen }) => {
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [years, setYears] = useState(null);
 
-  const { addClinicalData } = useStore();
+  const cancerCasesInFamilyArray = useStore(
+    (state) => state.user.clinical_data.cancer_cases_in_family
+  );
+
+  const { addCancerCaseInFamily } = useStore();
 
   function handleSubmit() {
-    addClinicalData({
-      cancer_cases_in_family: [
-        {
-          parent_level: clinicalData.cancer_cases_in_family[0].parent_level,
-          age: years !== null && !checked ? years : 0,
-        },
-      ],
-    });
+    if (years != null) {
+      const cancerCase = {
+        parent_level: cancerCasesInFamilyArray[0].parent_level,
+        age: years,
+      };
+      addCancerCaseInFamily([cancerCase]);
+    }
 
     handleNextScreen(1);
   }

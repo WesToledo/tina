@@ -19,6 +19,7 @@ import {
   Input,
   Icon,
 } from "@ui-kitten/components";
+import { useNavigation } from "@react-navigation/native";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -26,17 +27,31 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-export const Cancer_1 = ({ navigation, handleNextScreen }) => {
+export const Cancer_1 = ({ handleNextScreen }) => {
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const { authenticate } = useStore();
+  const navigation = useNavigation();
+
+  const { isCancerCasesInFamily: setCancerCases } = useStore();
+
+  function handleNextButton() {
+    // se não tem parentesco com câncer de mama 1
+
+    if (selectedIndex == 0) {
+      handleNextScreen(1);
+      setCancerCases(true);
+    } else {
+      setCancerCases(false);
+      navigation.navigate("Mamografia");
+    }
+  }
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
       <Layout style={styles.content}>
         <View style={styles.header}>
-          <Text category="h2" style={styles.text}>
+          <Text category="h4" style={styles.text}>
             Dados Clínicos
           </Text>
 
@@ -78,11 +93,7 @@ export const Cancer_1 = ({ navigation, handleNextScreen }) => {
             <Button
               style={styles.button}
               size="medium"
-              onPress={() => {
-                // se tem parentesco com câncer de mama
-                if (selectedIndex == 0) handleNextScreen(1);
-                else authenticate();
-              }}
+              onPress={handleNextButton}
             >
               Próximo
             </Button>
@@ -114,11 +125,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 20,
     textAlign: "center",
+    fontWeight: "normal",
   },
   content: {
-    // backgroundColor: "#fff",
+    backgroundColor: "#fff",
     borderRadius: 5,
     width: "90%",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   header: {
     justifyContent: "center",

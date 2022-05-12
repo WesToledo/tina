@@ -8,6 +8,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from "react-native";
+import useStore from "src/store";
 import {
   Button,
   Radio,
@@ -29,6 +30,18 @@ export const Mamografia_1 = ({ handleNextScreen }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const { addMammographyData } = useStore();
+
+  function handleNextButton() {
+    addMammographyData([
+      {
+        has_done_this_year: selectedIndex === 0,
+        year: new Date().getFullYear(),
+      },
+    ]);
+    handleNextScreen(1);
+  }
+
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
       <Layout style={styles.content}>
@@ -37,13 +50,13 @@ export const Mamografia_1 = ({ handleNextScreen }) => {
             Dados Clínicos
           </Text>
 
-          <Text category="s1" style={styles.subtitle}>
+          <Text category="h6" style={styles.subtitle}>
             A seguir preencha corretamente o que se pede, para ter uma melhor
             experiência ao usar o TINA
           </Text>
         </View>
         <View style={styles.form}>
-          <Text category="s1">Já fez mamografia esse ano ?</Text>
+          <Text category="h6">Já fez mamografia esse ano ?</Text>
           <RadioGroup
             selectedIndex={selectedIndex}
             onChange={(index) => setSelectedIndex(index)}
@@ -63,7 +76,7 @@ export const Mamografia_1 = ({ handleNextScreen }) => {
             <Button
               style={styles.button}
               size="medium"
-              onPress={() => handleNextScreen(1)}
+              onPress={handleNextButton}
             >
               Próximo
             </Button>
@@ -88,16 +101,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#670D73",
   },
   text: {
-    padding: 10,
+    padding: 30,
     fontWeight: "bold",
   },
   subtitle: {
-    paddingHorizontal: 25,
+    marginTop: 20,
+    paddingHorizontal: 20,
+    textAlign: "center",
+    fontWeight: "normal",
   },
   content: {
     backgroundColor: "#fff",
     borderRadius: 5,
-    width: "75%",
+    width: "90%",
     justifyContent: "flex-start",
     alignItems: "center",
   },
@@ -106,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   form: {
-    padding: 25,
+    padding: 30,
     width: "100%",
   },
   input: {

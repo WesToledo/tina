@@ -17,7 +17,9 @@ import {
   Spinner,
   Input,
 } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
+
+import api from "src/services/api";
+import useStore from "src/store";
 
 const tina1 = require("./tina1.png");
 
@@ -27,9 +29,26 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-export const Mamografia_2 = ({ handleNextScreen }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+export const Mamografia_2 = () => {
   const [loading, setLoading] = useState(false);
+
+  const clinicalData = useStore((state) => state.user.clinical_data);
+  const { authenticate, user } = useStore();
+
+  async function handleSubmit() {
+    setLoading(true);
+
+    try {
+      await api.post("/user/clinical-data/set/" + user._id, {
+        clinical_data: clinicalData,
+      });
+
+      authenticate();
+    } catch (err) {
+      setLoading(false);
+      console.log("Erro ao enviar dados clínicos ", err);
+    }
+  }
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
@@ -43,14 +62,24 @@ export const Mamografia_2 = ({ handleNextScreen }) => {
           <Image source={tina1} style={styles.image} />
         </View>
       </View>
-      <Button
-        style={styles.button}
-        status="control"
-        size="medium"
-        onPress={() => handleNextScreen(1)}
-      >
-        Próximo
-      </Button>
+
+      {!loading ? (
+        <Button
+          style={styles.button}
+          size="medium"
+          onPress={handleSubmit}
+          status="control"
+        >
+          Próximo
+        </Button>
+      ) : (
+        <Button
+          style={styles.button}
+          size="medium"
+          status="control"
+          accessoryLeft={LoadingIndicator}
+        />
+      )}
     </KeyboardAvoidingView>
   );
 };
@@ -91,7 +120,6 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
-
     width: "75%",
   },
   checkbox: {

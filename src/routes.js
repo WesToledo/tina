@@ -67,7 +67,9 @@ function TabNavigator() {
 function RootStackScreen() {
   const state = useStore();
 
-  console.log("asdasads", state);
+  useEffect(() => {
+    console.log("asdasads", state);
+  }, [state]);
 
   return (
     <RootStack.Navigator
@@ -100,6 +102,11 @@ function RootStackScreen() {
 
 export function AppNavigator() {
   const authenticated = useStore((state) => state.authenticated);
+  const state = useStore();
+
+  useEffect(() => {
+    console.log("_________________________________________", state);
+  }, [state]);
 
   return (
     <NavigationContainer>

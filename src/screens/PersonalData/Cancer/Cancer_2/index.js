@@ -8,6 +8,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from "react-native";
+import useStore from "src/store";
 import {
   Button,
   Radio,
@@ -27,29 +28,23 @@ const LoadingIndicator = (props) => (
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back-outline" />;
 
-export const Cancer_2 = ({
-  navigation,
-  handleNextScreen,
-  setClinicalData,
-  clinicalData,
-}) => {
+export const Cancer_2 = ({ navigation, handleNextScreen, setClinicalData }) => {
   const [checked, setChecked] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  const { addCancerCaseInFamily } = useStore();
 
   function handleBackButton() {
     handleNextScreen(-1);
   }
 
   function handleSubmit() {
-    setClinicalData({
-      ...clinicalData,
-      cancer_cases_in_family: [
-        {
-          parent_level: checked,
-          age: 0,
-        },
-      ],
-    });
+    addCancerCaseInFamily([
+      {
+        parent_level: checked,
+        age: null,
+      },
+    ]);
     handleNextScreen(1);
   }
 
@@ -77,8 +72,8 @@ export const Cancer_2 = ({
               justifyContent: "space-around",
               alignContent: "center",
               flexWrap: "wrap",
-              marginTop: 15,
-              marginBottom: 15,
+              marginTop: 30,
+              marginBottom: 30,
             }}
           >
             <CheckBox

@@ -16,11 +16,14 @@ const INITIAL_USER = {
   password: null,
   clinical_data: {
     aswered: false,
+    has_cancer_cases_in_family: null,
     cancer_cases_in_family: [],
-    mammography: {
-      has_done_this_year: null,
-      year: null,
-    },
+    mammography: [
+      //   {
+      //   has_done_this_year: null,
+      //   year: null,
+      // }
+    ],
   },
 };
 
@@ -52,6 +55,27 @@ const store = (set, get) => ({
     set(
       produce((oldState) => {
         oldState.authenticated = true;
+      })
+    ),
+
+  isCancerCasesInFamily: (value) =>
+    set(
+      produce((oldState) => {
+        oldState.user.clinical_data.has_cancer_cases_in_family = value;
+      })
+    ),
+
+  addCancerCaseInFamily: (cancerCases) =>
+    set(
+      produce((oldState) => {
+        oldState.user.clinical_data.cancer_cases_in_family = [...cancerCases];
+      })
+    ),
+
+  addMammographyData: (mammography_data) =>
+    set(
+      produce((oldState) => {
+        oldState.user.clinical_data.mammography = mammography_data;
       })
     ),
 
