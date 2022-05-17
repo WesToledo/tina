@@ -32,10 +32,28 @@ const store = (set, get) => ({
 
   authenticated: false,
 
+  alreadyFetch: false,
+
   // USER
   user: {
     ...INITIAL_USER,
   },
+
+  mamma: [
+    // {
+    //   problem: "",
+    //   date: new Date().toISOString(),
+    //   description: "",
+    // },
+  ],
+
+  genital: [
+    // {
+    //   problem: "",
+    //   date: new Date().toISOString(),
+    //   description: "",
+    // },
+  ],
 
   signin: (user, authentication) =>
     set(
@@ -55,6 +73,12 @@ const store = (set, get) => ({
     set(
       produce((oldState) => {
         oldState.authenticated = true;
+      })
+    ),
+  setFetch: (value) =>
+    set(
+      produce((oldState) => {
+        oldState.alreadyFetch = value;
       })
     ),
 
@@ -86,6 +110,34 @@ const store = (set, get) => ({
           ...oldState.user.clinical_data.cancer_cases_in_family,
           clinical_data.cancer_cases_in_family[0],
         ];
+      })
+    ),
+
+  setMammaOcurrency: (mammaFacts) =>
+    set(
+      produce((oldState) => {
+        oldState.mamma = mammaFacts;
+      })
+    ),
+
+  addMammaOcurrency: (ocurrency) =>
+    set(
+      produce((oldState) => {
+        oldState.mamma.push(ocurrency);
+      })
+    ),
+
+  addGenitalOcurrency: (ocurrency) =>
+    set(
+      produce((oldState) => {
+        oldState.genital.push(ocurrency);
+      })
+    ),
+
+  setGenitalOcurrency: (genitalFacts) =>
+    set(
+      produce((oldState) => {
+        oldState.genital = genitalFacts;
       })
     ),
 });

@@ -45,7 +45,7 @@ export const SignInScreen = ({ navigation }) => {
         password: form.password,
       });
 
-      signin(response.data.user, false);
+      signin(response.data.user, response.data.user.clinical_data.answered);
       setLoading(false);
       navigation.navigate("PersonalData");
     } catch (err) {

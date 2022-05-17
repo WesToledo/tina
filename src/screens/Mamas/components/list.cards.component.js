@@ -2,15 +2,16 @@ import React from "react";
 import { StyleSheet, Image, ScrollView, View } from "react-native";
 import { Divider, Layout, Text } from "@ui-kitten/components";
 
-import { CardPodcast } from "./card.podcast.component";
+import { CardMamma } from "./card.mamma.component";
 
-export const ListCards = ({ navigation, list = [] }) => {
+export const ListCards = ({ mamma }) => {
   return (
     <Layout style={styles.container}>
       <ScrollView>
         <Layout>
-          <CardPodcast />
-
+          {mamma.map((fact, index) => (
+            <CardMamma key={index} fact={fact} />
+          ))}
           <Divider />
         </Layout>
       </ScrollView>

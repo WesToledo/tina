@@ -7,10 +7,9 @@ var height = Dimensions.get("window").height;
 const MainHeader = () => {
   return (
     <TopNavigation
-      title="TINA"
       alignment="left"
-      accessoryRight={() => (
-        <Avatar size="large" source={require("src/assets/tina.jpeg")} />
+      accessoryLeft={() => (
+        <Avatar size="large" source={require("src/assets/LOGO.png")} />
       )}
     />
   );

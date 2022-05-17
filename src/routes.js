@@ -18,6 +18,8 @@ import { RecoverPasswordScreen } from "src/screens/RecoverPassword";
 import { CancerQuestionsScreen } from "src/screens/PersonalData/Cancer";
 import { MamografiaQuestionsScreen } from "src/screens/PersonalData/Mamografia";
 
+import SplashScreen from "./screens/SplashScreen/index";
+
 import { HomeScreen } from "screens/Home";
 import { MamaScreen } from "src/screens/Mamas";
 import { GenitalScreen } from "src/screens/Genital";
@@ -49,6 +51,10 @@ const BottomTabBar = ({ navigation, state }) => (
 );
 
 function TabNavigator() {
+  const state = useStore();
+
+  console.log("---------------", state);
+
   return (
     <>
       <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
@@ -64,85 +70,64 @@ function TabNavigator() {
   );
 }
 
-function RootStackScreen() {
-  const state = useStore();
-
-  useEffect(() => {
-    console.log("asdasads", state);
-  }, [state]);
-
-  return (
-    <RootStack.Navigator
-      mode="modal"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      {true ? (
-        <>
-          <RootStack.Screen
-            name="Main"
-            component={TabNavigator}
-            options={{ headerShown: false }}
-          />
-          <RootStack.Screen
-            name="Configuration"
-            component={ConfigurationScreen}
-            screenOptions={{
-              headerShown: true,
-            }}
-          />
-        </>
-      ) : (
-        <></>
-      )}
-    </RootStack.Navigator>
-  );
-}
-
 export function AppNavigator() {
   const authenticated = useStore((state) => state.authenticated);
-  const state = useStore();
-
-  useEffect(() => {
-    console.log("_________________________________________", state);
-  }, [state]);
 
   return (
     <NavigationContainer>
-      {!authenticated ? (
-        <RootStack.Navigator>
-          <RootStack.Screen
-            name="SignIn"
-            component={SignInScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <RootStack.Screen
-            name="SignUp"
-            component={SignUpScreen}
-            options={{ title: "" }}
-          />
-          <RootStack.Screen
-            name="Recover"
-            component={RecoverPasswordScreen}
-            options={{ title: "" }}
-          />
-          <RootStack.Screen
-            name="PersonalData"
-            component={CancerQuestionsScreen}
-            options={{ title: "", headerShown: false }}
-          />
-          <RootStack.Screen
-            name="Mamografia"
-            component={MamografiaQuestionsScreen}
-            options={{ title: "", headerShown: false }}
-          />
-        </RootStack.Navigator>
-      ) : (
-        <RootStackScreen />
-      )}
+      <RootStack.Navigator>
+        {!authenticated ? (
+          <>
+            <RootStack.Screen
+              name="SignIn"
+              component={SignInScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <RootStack.Screen
+              name="SignUp"
+              component={SignUpScreen}
+              options={{ title: "" }}
+            />
+            <RootStack.Screen
+              name="Recover"
+              component={RecoverPasswordScreen}
+              options={{ title: "" }}
+            />
+            <RootStack.Screen
+              name="PersonalData"
+              component={CancerQuestionsScreen}
+              options={{ title: "", headerShown: false }}
+            />
+            <RootStack.Screen
+              name="Mamografia"
+              component={MamografiaQuestionsScreen}
+              options={{ title: "", headerShown: false }}
+            />
+          </>
+        ) : (
+          <>
+            <RootStack.Screen
+              name="Splash"
+              component={SplashScreen}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen
+              name="Main"
+              component={TabNavigator}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen
+              name="Configuration"
+              component={ConfigurationScreen}
+              screenOptions={{
+                headerShown: true,
+              }}
+            />
+          </>
+        )}
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 }

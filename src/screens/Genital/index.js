@@ -7,22 +7,50 @@ import {
   TopNavigation,
   Text,
   Spinner,
+  Avatar,
+  Button,
 } from "@ui-kitten/components";
+
+import { ModalCreateGenitalOcurrency } from "./components/modal.create.component";
+
 import Constants from "expo-constants";
 
 import MainHeader from "src/components/MainHeader";
 
 import { ListCards } from "./components/list.cards.component";
+import useStore from "src/store";
 
 export const GenitalScreen = () => {
+  const [visible, setVisible] = useState(false);
+
+  function handleAddNewOcurrency() {
+    setVisible(true);
+  }
+
+  const { genital } = useStore();
+
+  console.log("genital", genital);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <Layout style={{ flex: 1 }}>
         <MainHeader />
+        <TopNavigation
+          alignment="left"
+          accessoryRight={() => (
+            <Button
+              style={styles.button}
+              appearance="filled"
+              onPress={handleAddNewOcurrency}
+            >
+              Reportar Problema
+            </Button>
+          )}
+        />
 
         <ScrollView>
           <Text category="h4" style={styles.title}>
-            Saúde da Genital
+            Saúde das Mamas
           </Text>
           {/* <Layout style={{ flex: 1 }}>
             <Input
@@ -35,9 +63,10 @@ export const GenitalScreen = () => {
               style={styles.search_input}
             />
           </Layout> */}
-          <ListCards />
+          <ListCards genital={genital} />
         </ScrollView>
       </Layout>
+      <ModalCreateGenitalOcurrency visible={visible} setVisible={setVisible} />
     </SafeAreaView>
   );
 };

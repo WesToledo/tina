@@ -17,8 +17,26 @@ const DownloadIcon = (props) => (
   <Icon {...props} name="cloud-download-outline" />
 );
 
-export const CardPodcast = () => {
+function getFormatedDate(ISODate) {
+  var date = new Date(ISODate);
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var dt = date.getDate();
+
+  if (dt < 10) {
+    dt = "0" + dt;
+  }
+  if (month < 10) {
+    month = "0" + month;
+  }
+
+  return dt + "/" + month + "/" + year;
+}
+
+export const CardGenital = ({ fact }) => {
   const navigation = useNavigation();
+
+  const { date, problem, description } = fact;
 
   return (
     <View style={styles.content}>
@@ -35,12 +53,12 @@ export const CardPodcast = () => {
         style={styles.card}
         header={
           <View>
-            <Text category="h6">Corrimento Encontrado</Text>
-            <Text category="s1">12/10/2010</Text>
+            <Text category="h6">{problem}</Text>
+            <Text category="s1">{getFormatedDate(date)}</Text>
           </View>
         }
       >
-        <Text>Coceira e cor avermelhada</Text>
+        <Text>{description}</Text>
       </Card>
 
       {/* <View>

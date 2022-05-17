@@ -7,18 +7,46 @@ import {
   TopNavigation,
   Text,
   Spinner,
+  Avatar,
+  Button,
 } from "@ui-kitten/components";
+
+import ModalCreateOcurrency from "./components/modal.create.component";
+
 import Constants from "expo-constants";
 
 import MainHeader from "src/components/MainHeader";
 
 import { ListCards } from "./components/list.cards.component";
+import useStore from "src/store";
 
 export const MamaScreen = () => {
+  const [visible, setVisible] = useState(false);
+
+  function handleAddNewOcurrency() {
+    setVisible(true);
+  }
+
+  const { mamma } = useStore();
+
+  console.log("mamma", mamma);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <Layout style={{ flex: 1 }}>
         <MainHeader />
+        <TopNavigation
+          alignment="left"
+          accessoryRight={() => (
+            <Button
+              style={styles.button}
+              appearance="filled"
+              onPress={handleAddNewOcurrency}
+            >
+              Reportar Problema
+            </Button>
+          )}
+        />
 
         <ScrollView>
           <Text category="h4" style={styles.title}>
@@ -35,9 +63,10 @@ export const MamaScreen = () => {
               style={styles.search_input}
             />
           </Layout> */}
-          <ListCards />
+          <ListCards mamma={mamma} />
         </ScrollView>
       </Layout>
+      <ModalCreateOcurrency visible={visible} setVisible={setVisible} />
     </SafeAreaView>
   );
 };
