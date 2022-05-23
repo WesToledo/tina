@@ -10,10 +10,17 @@ export const ListCards = ({ mamma }) => {
       <ScrollView>
         <Layout>
           {mamma.map((fact, index) => (
-            <CardMamma key={index} fact={fact} />
+            <>
+              <CardMamma key={index} fact={fact} />
+              <Divider />
+            </>
           ))}
-          <Divider />
         </Layout>
+        {mamma.length == 0 && (
+          <Text appearance="hint" category="h6" style={styles.title}>
+            Nenhum problema reportado ainda
+          </Text>
+        )}
       </ScrollView>
     </Layout>
   );
@@ -22,6 +29,7 @@ export const ListCards = ({ mamma }) => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
+    marginVertical: 10,
     height: "auto",
   },
 });

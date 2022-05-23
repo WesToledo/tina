@@ -10,10 +10,17 @@ export const ListCards = ({ genital }) => {
       <ScrollView>
         <Layout>
           {genital.map((fact, index) => (
-            <CardGenital key={index} fact={fact} />
+            <>
+              <CardGenital key={index} fact={fact} />
+              <Divider />
+            </>
           ))}
-          <Divider />
         </Layout>
+        {genital.length == 0 && (
+          <Text appearance="hint" category="h6" style={styles.title}>
+            Nenhum problema reportado ainda
+          </Text>
+        )}
       </ScrollView>
     </Layout>
   );
@@ -22,6 +29,8 @@ export const ListCards = ({ genital }) => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
+    marginVertical: 10,
     height: "auto",
   },
+  title: {},
 });

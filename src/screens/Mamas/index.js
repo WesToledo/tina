@@ -19,12 +19,14 @@ import MainHeader from "src/components/MainHeader";
 
 import { ListCards } from "./components/list.cards.component";
 import useStore from "src/store";
+import { useNavigation } from "@react-navigation/native";
 
 export const MamaScreen = () => {
   const [visible, setVisible] = useState(false);
+  const navigation = useNavigation();
 
   function handleAddNewOcurrency() {
-    setVisible(true);
+    navigation.navigate("CreateMamaReport");
   }
 
   const { mamma } = useStore();
@@ -78,6 +80,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginLeft: 15,
+    marginVertical: 15,
     fontWeight: "bold",
   },
   search_input: {

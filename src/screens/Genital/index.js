@@ -9,6 +9,7 @@ import {
   Spinner,
   Avatar,
   Button,
+  Divider,
 } from "@ui-kitten/components";
 
 import { ModalCreateGenitalOcurrency } from "./components/modal.create.component";
@@ -50,7 +51,7 @@ export const GenitalScreen = () => {
 
         <ScrollView>
           <Text category="h4" style={styles.title}>
-            Saúde das Mamas
+            Saúde das Genitais
           </Text>
           {/* <Layout style={{ flex: 1 }}>
             <Input
@@ -78,6 +79,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginLeft: 15,
+    marginVertical: 15,
     fontWeight: "bold",
   },
   search_input: {

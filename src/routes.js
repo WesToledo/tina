@@ -21,7 +21,10 @@ import { MamografiaQuestionsScreen } from "src/screens/PersonalData/Mamografia";
 import SplashScreen from "./screens/SplashScreen/index";
 
 import { HomeScreen } from "screens/Home";
+
 import { MamaScreen } from "src/screens/Mamas";
+import { CreateMammaReportScreen } from "src/screens/Mamas/CreateMammaReport";
+
 import { GenitalScreen } from "src/screens/Genital";
 import { ProfileScreen } from "screens/Profile";
 
@@ -49,6 +52,20 @@ const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigationTab title="Perfil" icon={PersonIcon} />
   </BottomNavigation>
 );
+
+function MammaNavigator({ navigation }) {
+  return (
+    <RootStack.Navigator>
+      <RootStack.Screen
+        name="CreateMamaReport"
+        component={CreateMammaReportScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </RootStack.Navigator>
+  );
+}
 
 function TabNavigator() {
   const state = useStore();
@@ -124,6 +141,14 @@ export function AppNavigator() {
               screenOptions={{
                 headerShown: true,
               }}
+            />
+            <RootStack.Screen
+              name="CreateMamaReport"
+              component={CreateMammaReportScreen}
+              // options={{
+              //   headerShown: false,
+              // }}
+              options={{ title: "" }}
             />
           </>
         )}
