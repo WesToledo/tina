@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
-import { Icon, Text, Button, Card } from "@ui-kitten/components";
+import { Icon, Text, Button, Card, CardH } from "@ui-kitten/components";
 import img from "src/assets/thumb.png";
 
 var width = Dimensions.get("window").width;
@@ -52,13 +52,22 @@ export const CardGenital = ({ fact }) => {
         status="primary"
         style={styles.card}
         header={
+          description != "" && (
+            <View>
+              <Text category="h6">{problem}</Text>
+              <Text category="s1">{getFormatedDate(date)}</Text>
+            </View>
+          )
+        }
+      >
+        {description == "" ? (
           <View>
             <Text category="h6">{problem}</Text>
             <Text category="s1">{getFormatedDate(date)}</Text>
           </View>
-        }
-      >
-        <Text>{description}</Text>
+        ) : (
+          <Text>{description}</Text>
+        )}
       </Card>
 
       {/* <View>

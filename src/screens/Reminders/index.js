@@ -76,10 +76,10 @@ export const RemindersScreen = () => {
           )}
         />
 
+        <Text category="h4" style={styles.title}>
+          Lembretes
+        </Text>
         <ScrollView>
-          <Text category="h4" style={styles.title}>
-            Lembretes ativos
-          </Text>
           {/* <Layout style={{ flex: 1 }}>
             <Input
               label=""

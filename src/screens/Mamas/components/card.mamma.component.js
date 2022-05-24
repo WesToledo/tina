@@ -52,13 +52,22 @@ export const CardMamma = ({ fact }) => {
         status="primary"
         style={styles.card}
         header={
+          description != "" && (
+            <View>
+              <Text category="h6">{problem}</Text>
+              <Text category="s1">{getFormatedDate(date)}</Text>
+            </View>
+          )
+        }
+      >
+        {description == "" ? (
           <View>
             <Text category="h6">{problem}</Text>
             <Text category="s1">{getFormatedDate(date)}</Text>
           </View>
-        }
-      >
-        <Text>{description}</Text>
+        ) : (
+          <Text>{description}</Text>
+        )}
       </Card>
 
       {/* <View>

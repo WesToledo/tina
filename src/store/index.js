@@ -28,6 +28,8 @@ const INITIAL_USER = {
   calendar: {
     events: [],
   },
+  exams: [],
+  appointment: [],
   appointment: [
     // user: {
     //   type: mongoose.Schema.Types.ObjectId,
@@ -101,6 +103,9 @@ const store = (set, get) => ({
     //   description: "",
     // },
   ],
+
+  exams: [],
+  appointment: [],
 
   signin: (user, authentication) =>
     set(
