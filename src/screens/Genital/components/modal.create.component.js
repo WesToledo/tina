@@ -99,7 +99,7 @@ export const ModalCreateGenitalOcurrency = ({ visible, setVisible }) => {
         description,
       });
 
-      addGenitalOcurrency(fact);
+      addGenitalOcurrency(fact.data.fact);
 
       setLoading(false);
       setVisible(false);

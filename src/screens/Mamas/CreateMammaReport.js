@@ -107,7 +107,7 @@ export const CreateMammaReportScreen = ({ visible, setVisible }) => {
         description,
       });
 
-      addMammaOcurrency(fact);
+      addMammaOcurrency(fact.data.fact);
 
       setLoading(false);
       navigation.navigate("Main", { screen: "Mamma" });

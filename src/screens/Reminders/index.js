@@ -38,11 +38,21 @@ export const RemindersScreen = () => {
 
   const { exams, appointment } = useStore();
 
+  console.log("exams, appointment", [
+    ...exams.map((exam) => {
+      return { ...exam, type: "exam" };
+    }),
+    ...appointment.map((appoint) => {
+      return { ...appoint, type: "appointment" };
+    }),
+  ]);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <Layout style={{ flex: 1 }}>
         <MainHeader />
         <TopNavigation
+          style={styles.top}
           alignment="left"
           accessoryRight={() => (
             <Button
@@ -83,7 +93,7 @@ export const RemindersScreen = () => {
           </Layout> */}
           <ListCards
             reminders={
-              exams || appointments
+              exams || appointment
                 ? [
                     ...exams.map((exam) => {
                       return { ...exam, type: "exam" };
@@ -120,5 +130,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 50,
+  },
+  top: {
+    margin: 10,
   },
 });

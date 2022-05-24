@@ -23,7 +23,7 @@ import {
 import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/core";
 
-import api from "src/services/api";
+import useStore from "src/store";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -40,20 +40,14 @@ const BackAction = () => {
 };
 
 export const ConfigurationScreen = ({ navigation }) => {
-  const [form, setForm] = useState({
-    email,
-    name,
-  });
-
-  const [selectedIndex, setSelectedIndex] = useState(type == "Student" ? 0 : 1);
   const [loading, setLoading] = useState(false);
 
-  const checkPassword = () => {
-    if (form.password !== form.password_confirm) {
-      return false;
-    }
-    return true;
-  };
+  const { user } = useStore();
+
+  const [form, setForm] = useState({
+    email: user.email,
+    name: user.name,
+  });
 
   async function handleSubmit() {
     // setLoading(true);
@@ -79,13 +73,11 @@ export const ConfigurationScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <TopNavigation
-        accessoryLeft={BackAction}
-        title="Editar usuário"
-        alignment="center"
-      />
       <Layout style={{ flex: 1 }}>
         <KeyboardAvoidingView behavior="height" style={styles.container}>
+          <Text category="h4" style={styles.title}>
+            Editar Perfil
+          </Text>
           <Layout style={styles.content}>
             <View style={styles.form}>
               <Input
@@ -106,9 +98,6 @@ export const ConfigurationScreen = ({ navigation }) => {
                   setForm({ ...form, email: nextValue })
                 }
               />
-              <Text category="s2" style={{ color: "#8f9bb3" }}>
-                Eu sou:
-              </Text>
 
               {!loading ? (
                 <Button
@@ -136,7 +125,6 @@ export const ConfigurationScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    paddingTop: Constants.statusBarHeight,
   },
   container: {
     flex: 1,
@@ -179,5 +167,10 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: 15,
     // marginBottom: 15,
+  },
+  title: {
+    marginLeft: 15,
+    marginVertical: 15,
+    fontWeight: "bold",
   },
 });

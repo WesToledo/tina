@@ -41,11 +41,9 @@ function getFormatedTime(date) {
   return `${hr}h${min}min`;
 }
 export const CardReminder = ({ reminder }) => {
-  const { date, hospital_name, name, obs } = reminder;
-
   const now = new Date();
 
-  const reminderDate = new Date(date);
+  const reminderDate = new Date(reminder.date);
 
   return (
     <View style={styles.content}>
@@ -63,7 +61,6 @@ export const CardReminder = ({ reminder }) => {
         header={
           <View>
             <View style={styles.content}>
-              style={styles.marker}
               <Icon
                 fill={theme["color-primary-500"]}
                 name={
@@ -71,27 +68,41 @@ export const CardReminder = ({ reminder }) => {
                     ? "file-text-outline"
                     : "person-outline"
                 }
+                style={styles.icon}
               />
               <View>
-                <Text category="h6">{name}</Text>
+                <Text category="h6">
+                  {reminder.type == "exam" ? reminder.name : reminder.specialty}
+                </Text>
                 <Text category="s1">{getFormatedDate(reminderDate)}</Text>
                 <Text
                   category="s1"
                   status="primary"
                   style={{ fontWeight: "bold" }}
                 >
-                  {getFormatedTime(new Date(date))}
+                  {getFormatedTime(reminderDate)}
                 </Text>
                 <View style={styles.location}>
-                  <Icon style={styles.icon} fill="#8F9BB3" name="pin-outline" />
-                  <Text category="s2">{hospital_name}</Text>
+                  <Icon
+                    style={styles.icon_inner}
+                    fill="#8F9BB3"
+                    name={
+                      reminder.type == "exam" ? "pin-outline" : "person-outline"
+                    }
+                  />
+                  <Text category="s2">
+                    {reminder.type == "exam"
+                      ? reminder.hospital_name
+                      : reminder.doctor_name}
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
         }
       >
-        <Text>{obs}</Text>
+        <Text>Observações:</Text>
+        {reminder.obs && <Text>{reminder.obs}</Text>}
       </Card>
 
       {/* <View>
@@ -137,7 +148,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icon: {
-    marginRight: 5,
+    marginRight: 20,
+    marginLeft: -10,
     width: 20,
     height: 20,
   },
@@ -145,6 +157,11 @@ const styles = StyleSheet.create({
     marginRight: 20,
     width: 32,
     height: 32,
+  },
+  icon_inner: {
+    marginRight: 10,
+    width: 20,
+    height: 20,
   },
 });
 

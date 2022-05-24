@@ -12,7 +12,6 @@ export const ListCards = ({ mamma }) => {
           {mamma.map((fact, index) => (
             <>
               <CardMamma key={index} fact={fact} />
-              <Divider />
             </>
           ))}
         </Layout>

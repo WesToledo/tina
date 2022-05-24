@@ -100,7 +100,7 @@ export const CreateAppointmentScreen = ({ visible, setVisible }) => {
         specialty: specialtys_types[selectedIndex.row].label,
       });
 
-      addAppointment(appointment);
+      addAppointment(appointment.data.appointment);
 
       setLoading(false);
       navigation.navigate("Main", { screen: "Lembretes" });

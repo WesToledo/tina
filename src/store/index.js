@@ -28,7 +28,7 @@ const INITIAL_USER = {
   calendar: {
     events: [],
   },
-  appointments: [
+  appointment: [
     // user: {
     //   type: mongoose.Schema.Types.ObjectId,
     //   ref: "User",
@@ -205,7 +205,7 @@ const store = (set, get) => ({
   addAppointment: (appointment) =>
     set(
       produce((oldState) => {
-        oldState.appointments.push(appointment);
+        oldState.appointment.push(appointment);
       })
     ),
 

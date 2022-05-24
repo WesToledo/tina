@@ -100,14 +100,13 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
         name: exams_types[selectedIndex.row].label,
       });
 
-      addExam(exam);
+      addExam(exam.data.exam);
 
       setLoading(false);
       navigation.navigate("Main", { screen: "Lembretes" });
     } catch (err) {
       setLoading(false);
       console.log("Erro ao criar exame ", err);
-      // }
     }
   }
 

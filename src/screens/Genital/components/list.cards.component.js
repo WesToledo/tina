@@ -12,7 +12,6 @@ export const ListCards = ({ genital }) => {
           {genital.map((fact, index) => (
             <>
               <CardGenital key={index} fact={fact} />
-              <Divider />
             </>
           ))}
         </Layout>
