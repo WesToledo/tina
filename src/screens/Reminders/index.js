@@ -22,7 +22,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import ListCards from "./components/list.cards.component";
 
-const StarIcon = (props) => <Icon {...props} name="star" />;
+const AppointmenntIcon = (props) => <Icon {...props} name="person" />;
+const ExamIcon = (props) => <Icon {...props} name="file-text" />;
 
 export const RemindersScreen = () => {
   const [visible, setVisible] = useState(false);
@@ -31,8 +32,11 @@ export const RemindersScreen = () => {
   function handleAddNewExam() {
     navigation.navigate("CreateExam");
   }
+  function handleAddNewAppointment() {
+    navigation.navigate("CreateAppointment");
+  }
 
-  const { exams, appointments } = useStore();
+  const { exams, appointment } = useStore();
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -42,9 +46,9 @@ export const RemindersScreen = () => {
           alignment="left"
           accessoryRight={() => (
             <Button
-              accessoryLeft={StarIcon}
+              accessoryLeft={ExamIcon}
               style={styles.button}
-              appearance="ghost"
+              appearance="filled"
               onPress={handleAddNewExam}
             >
               Marcar Exame
@@ -52,10 +56,10 @@ export const RemindersScreen = () => {
           )}
           accessoryLeft={() => (
             <Button
-              accessoryLeft={StarIcon}
+              accessoryLeft={AppointmenntIcon}
               style={styles.button}
-              appearance="ghost"
-              onPress={handleAddNewExam}
+              appearance="filled"
+              onPress={handleAddNewAppointment}
             >
               Marcar Consulta
             </Button>
@@ -78,18 +82,17 @@ export const RemindersScreen = () => {
             />
           </Layout> */}
           <ListCards
-            exams={
-              exams
-                ? exams
-                : [
-                    {
-                      user: 123,
-                      date: new Date(),
-                      hospital_name: "Clinica X",
-                      name: "Mamografia",
-                      obs: "Ir em jejum de 12 horas",
-                    },
+            reminders={
+              exams || appointments
+                ? [
+                    ...exams.map((exam) => {
+                      return { ...exam, type: "exam" };
+                    }),
+                    ...appointment.map((appoint) => {
+                      return { ...appoint, type: "appointment" };
+                    }),
                   ]
+                : []
             }
           />
         </ScrollView>

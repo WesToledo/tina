@@ -2,21 +2,20 @@ import React from "react";
 import { StyleSheet, Image, ScrollView, View } from "react-native";
 import { Divider, Layout, Text } from "@ui-kitten/components";
 
-import { CardExam } from "./card.exam.component";
+import { CardReminder } from "./card.exam.component";
 
-const ListCards = ({ exams }) => {
+const ListCards = ({ reminders }) => {
   return (
     <Layout style={styles.container}>
       <ScrollView>
         <Layout>
-          {exams.map((fact, index) => (
+          {reminders.map((reminder, index) => (
             <>
-              <CardExam key={index} fact={fact} />
-              <Divider />
+              <CardReminder key={index} reminder={reminder} />
             </>
           ))}
         </Layout>
-        {exams.length == 0 && (
+        {reminders.length == 0 && (
           <Text appearance="hint" category="h6" style={styles.title}>
             Nenhum problema reportado ainda
           </Text>

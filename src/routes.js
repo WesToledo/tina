@@ -30,6 +30,7 @@ import { ProfileScreen } from "screens/Profile";
 
 import { RemindersScreen } from "screens/Reminders";
 import { CreateExamScreen } from "src/screens/Reminders/CreateExam";
+import { CreateAppointmentScreen } from "src/screens/Reminders/CreateAppointment";
 
 import { ConfigurationScreen } from "screens/Profile/Configuration";
 import useStore from "./store";
@@ -142,6 +143,14 @@ export function AppNavigator() {
             <RootStack.Screen
               name="CreateExam"
               component={CreateExamScreen}
+              // options={{
+              //   headerShown: false,
+              // }}
+              options={{ title: "" }}
+            />
+            <RootStack.Screen
+              name="CreateAppointment"
+              component={CreateAppointmentScreen}
               // options={{
               //   headerShown: false,
               // }}

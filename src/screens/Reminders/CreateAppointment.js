@@ -49,12 +49,12 @@ function getFormatedDateAndTime(date) {
     month = "0" + month;
   }
 
-  return `Exame programado para ${dt}/${month}/${year} - ${hr}h${min}min`;
+  return `Consulta programada para ${dt}/${month}/${year} - ${hr}h${min}min`;
 }
 
 const StarIcon = (props) => <Icon {...props} name="clock-outline" />;
 
-export const CreateExamScreen = ({ visible, setVisible }) => {
+export const CreateAppointmentScreen = ({ visible, setVisible }) => {
   const [checked, setChecked] = useState(0);
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
@@ -62,19 +62,19 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
 
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState();
-  const [hospitalName, setHospitalName] = useState();
+  const [doctorName, setDoctorName] = useState();
 
-  const { user, addExam } = useStore();
+  const { user, addAppointment } = useStore();
 
-  const exams_types = [
+  const specialtys_types = [
     {
-      label: "Mamografia",
+      label: "Ginecologista",
     },
     {
-      label: "Papa Nicolau",
+      label: "Clínico Geral",
     },
     {
-      label: "Ultrassonografia",
+      label: "Otorrinolaringonologista",
     },
   ];
 
@@ -86,7 +86,7 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
     setLoading(true);
 
     try {
-      const exam = await api.post("/exam/create", {
+      const appointment = await api.post("/appointment/create", {
         user: user._id,
         date: new Date(
           date.getFullYear(),
@@ -95,18 +95,18 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
           date.getHours() - 3,
           date.getMinutes()
         ).toUTCString(),
-        hospital_name: hospitalName,
+        doctor_name: doctorName,
         obs: description,
-        name: exams_types[selectedIndex.row].label,
+        specialty: specialtys_types[selectedIndex.row].label,
       });
 
-      addExam(exam);
+      addAppointment(appointment);
 
       setLoading(false);
       navigation.navigate("Main", { screen: "Lembretes" });
     } catch (err) {
       setLoading(false);
-      console.log("Erro ao criar exame ", err);
+      console.log("Erro ao criar consulta ", err);
       // }
     }
   }
@@ -136,7 +136,7 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
       <ScrollView>
         <Layout style={styles.content}>
           <Text category="h4" style={styles.title}>
-            Marcar Exame
+            Marcar Consulta
           </Text>
           <View
             style={{
@@ -175,21 +175,21 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
             <Select
               label="Qual o exame ? "
               selectedIndex={selectedIndex}
-              value={exams_types[selectedIndex.row].label}
+              value={specialtys_types[selectedIndex.row].label}
               onSelect={(index) => setSelectedIndex(index)}
             >
-              {exams_types.map(({ label }, index) => (
+              {specialtys_types.map(({ label }, index) => (
                 <SelectItem title={label} />
               ))}
             </Select>
           </View>
 
           <Input
-            label="Nome da Clínica / Hospital"
-            value={hospitalName}
+            label="Nome da médica(o) / especialista"
+            value={doctorName}
             style={styles.textarea}
-            placeholder="Informe o nome da clínica / hospital"
-            onChangeText={(text) => setHospitalName(text)}
+            placeholder="Informe o nome da médica(o)"
+            onChangeText={(text) => setDoctorName(text)}
           />
           <Input
             label="Observações"

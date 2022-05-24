@@ -21,7 +21,6 @@ import {
   TopNavigation,
 } from "@ui-kitten/components";
 import Constants from "expo-constants";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
 
 import api from "src/services/api";
@@ -41,15 +40,13 @@ const BackAction = () => {
 };
 
 export const ConfigurationScreen = ({ navigation }) => {
-  const { name, email, type } = useSelector((state) => state.auth.user);
   const [form, setForm] = useState({
     email,
     name,
   });
+
   const [selectedIndex, setSelectedIndex] = useState(type == "Student" ? 0 : 1);
   const [loading, setLoading] = useState(false);
-
-  const dispatch = useDispatch();
 
   const checkPassword = () => {
     if (form.password !== form.password_confirm) {
@@ -59,26 +56,25 @@ export const ConfigurationScreen = ({ navigation }) => {
   };
 
   async function handleSubmit() {
-    setLoading(true);
-    if (checkPassword()) {
-      try {
-        const response = await api.post("/user/create", {
-          email: form.email,
-          password: form.password,
-          name: form.name,
-          type: selectedIndex === 0 ? "Student" : "Teacher",
-        });
-
-        dispatch(
-          login({
-            ...response.data.user,
-          })
-        );
-      } catch (err) {
-        setLoading(false);
-        console.log("ERRO AO criar usuario", err);
-      }
-    }
+    // setLoading(true);
+    // if (checkPassword()) {
+    //   try {
+    //     const response = await api.post("/user/create", {
+    //       email: form.email,
+    //       password: form.password,
+    //       name: form.name,
+    //       type: selectedIndex === 0 ? "Student" : "Teacher",
+    //     });
+    //     dispatch(
+    //       login({
+    //         ...response.data.user,
+    //       })
+    //     );
+    //   } catch (err) {
+    //     setLoading(false);
+    //     console.log("ERRO AO criar usuario", err);
+    //   }
+    // }
   }
 
   return (

@@ -187,6 +187,34 @@ const store = (set, get) => ({
         oldState.genital = genitalFacts;
       })
     ),
+
+  addExam: (exam) =>
+    set(
+      produce((oldState) => {
+        oldState.exams.push(exam);
+      })
+    ),
+
+  setExams: (exams) =>
+    set(
+      produce((oldState) => {
+        oldState.exams = exams;
+      })
+    ),
+
+  addAppointment: (appointment) =>
+    set(
+      produce((oldState) => {
+        oldState.appointments.push(appointment);
+      })
+    ),
+
+  setAppointment: (appointment) =>
+    set(
+      produce((oldState) => {
+        oldState.appointment = appointment;
+      })
+    ),
 });
 
 const useStore = create(devtools(persist(store, persistStore)));
