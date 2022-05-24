@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, ScrollView, Dimensions } from "react-native";
 import Constants from "expo-constants";
-import { Layout, Text, Icon, Avatar } from "@ui-kitten/components";
+import {
+  Layout,
+  Text,
+  Icon,
+  Avatar,
+  TopNavigation,
+  Button,
+  TopNavigationAction,
+} from "@ui-kitten/components";
 
 import { useNavigation } from "@react-navigation/core";
 
@@ -14,7 +22,7 @@ import useStore from "src/store";
 
 var height = Dimensions.get("window").height;
 
-const PlaylistIcon = (props) => <Icon {...props} name="layers-outline" />;
+const PillIcon = (props) => <Icon {...props} name="color-picker-outline" />;
 
 import { format } from "date-fns";
 
@@ -25,6 +33,7 @@ const formatDate = (date) => {
 export const HomeScreen = () => {
   const navigation = useNavigation();
 
+  const [pill, setPill] = useState(false);
   const [visible, setVisible] = useState(false);
   const [markedDatesArray, setMarkedDatesArray] = useState({});
   const [markedDates, setMarkedDates] = useState({});
@@ -90,8 +99,6 @@ export const HomeScreen = () => {
     const markedDatesArray = {};
     const markedDates = {};
 
-    markedDatesArray[formatDate(baseDate)] = { selected: true };
-
     appointments.forEach((appointment) => {
       const formattedDate = formatDate(new Date(appointment.date));
 
@@ -121,6 +128,8 @@ export const HomeScreen = () => {
       };
     }
 
+    // markedDates[formatDate(baseDate)] = { selected: true };
+
     setMarkedDates(markedDates);
 
     console.warn("marked", markedDates);
@@ -128,7 +137,23 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <MainHeader />
+      <TopNavigation
+        alignment="left"
+        accessoryLeft={() => (
+          <Avatar size="large" source={require("src/assets/LOGO.png")} />
+        )}
+        accessoryRight={() => (
+          <Button
+            style={styles.button}
+            status={"primary"}
+            appearance={!pill ? "filled" : "ghost"}
+            accessoryRight={PillIcon}
+            onPress={() => setPill(true)}
+          >
+            {!pill ? "Tomar a pílula" : "Tomei a pílula"}
+          </Button>
+        )}
+      />
 
       <CalendarList
         markingType="multi-dot"
@@ -155,6 +180,15 @@ export const HomeScreen = () => {
           }
         }}
         markedDates={markedDates}
+        theme={{
+          todayTextColor: "#000",
+
+          dayTextColor: "#000000",
+
+          textDayFontWeight: "bold",
+          textMonthFontWeight: "bold",
+          dotStyle: { width: 6, height: 6 },
+        }}
       />
       <ModalAppointmentsList
         visible={visible}

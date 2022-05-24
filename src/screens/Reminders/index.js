@@ -9,6 +9,7 @@ import {
   Spinner,
   Avatar,
   Button,
+  TopNavigationAction,
 } from "@ui-kitten/components";
 
 // import ModalCreateOcurrency from "./components/modal.create.component";
@@ -24,6 +25,7 @@ import ListCards from "./components/list.cards.component";
 
 const AppointmenntIcon = (props) => <Icon {...props} name="person" />;
 const ExamIcon = (props) => <Icon {...props} name="file-text" />;
+const GearIcon = (props) => <Icon {...props} name="settings-2-outline" />;
 
 export const RemindersScreen = () => {
   const [visible, setVisible] = useState(false);
@@ -34,6 +36,9 @@ export const RemindersScreen = () => {
   }
   function handleAddNewAppointment() {
     navigation.navigate("CreateAppointment");
+  }
+  function handleNavigateConfigScreen() {
+    navigation.navigate("RemindersConfig");
   }
 
   const { exams, appointment } = useStore();
@@ -50,7 +55,18 @@ export const RemindersScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Layout style={{ flex: 1 }}>
-        <MainHeader />
+        <TopNavigation
+          alignment="left"
+          accessoryLeft={() => (
+            <Avatar size="large" source={require("src/assets/LOGO.png")} />
+          )}
+          accessoryRight={() => (
+            <TopNavigationAction
+              icon={GearIcon}
+              onPress={handleNavigateConfigScreen}
+            />
+          )}
+        />
         <TopNavigation
           style={styles.top}
           alignment="left"

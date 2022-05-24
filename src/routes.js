@@ -33,6 +33,7 @@ import { CreateExamScreen } from "src/screens/Reminders/CreateExam";
 import { CreateAppointmentScreen } from "src/screens/Reminders/CreateAppointment";
 
 import { ConfigurationScreen } from "screens/Profile/Configuration";
+import { RemindersConfigScreen } from "screens/RemindersConfig";
 import useStore from "./store";
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -131,6 +132,14 @@ export function AppNavigator() {
               screenOptions={{
                 headerShown: true,
               }}
+            />
+            <RootStack.Screen
+              name="RemindersConfig"
+              component={RemindersConfigScreen}
+              screenOptions={{
+                headerShown: false,
+              }}
+              options={{ title: "" }}
             />
             <RootStack.Screen
               name="CreateMamaReport"

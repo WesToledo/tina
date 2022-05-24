@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import {
   Button,
   Card,
@@ -12,7 +17,6 @@ import {
   Spinner,
 } from "@ui-kitten/components";
 import { Dimensions } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 
 import api from "src/services/api";
 
@@ -55,7 +59,7 @@ const ModalAppointmentsList = ({
         visible={visible}
         backdropStyle={styles.backdrop}
       >
-        <KeyboardAvoidingView behavior="position" style={styles.modal}>
+        <ScrollView>
           <Card disabled={true} style={styles.card}>
             <Text category="h6">Eventos</Text>
 
@@ -65,7 +69,13 @@ const ModalAppointmentsList = ({
                   ({ date, title, subtitle, obs, type }) => (
                     <Card
                       style={styles.card}
-                      status={type == "fact" ? "danger" : "primary"}
+                      status={
+                        type == "fact"
+                          ? "danger"
+                          : type === "exam"
+                          ? "info"
+                          : "success"
+                      }
                     >
                       <View>
                         <Text category="h6">{title}</Text>
@@ -73,7 +83,7 @@ const ModalAppointmentsList = ({
                         {type != "fact" && (
                           <Text
                             category="s1"
-                            status="primary"
+                            // status="primary"
                             style={{ fontWeight: "bold" }}
                           >
                             {getFormatedTime(new Date(date))}
@@ -95,7 +105,7 @@ const ModalAppointmentsList = ({
               </Button>
             </View>
           </Card>
-        </KeyboardAvoidingView>
+        </ScrollView>
       </Modal>
     </View>
   );

@@ -102,7 +102,7 @@ export const CardReminder = ({ reminder }) => {
         }
       >
         <Text>Observações:</Text>
-        {reminder.obs && <Text>{reminder.obs}</Text>}
+        {reminder.obs != "" && <Text>{reminder.obs}</Text>}
       </Card>
 
       {/* <View>
