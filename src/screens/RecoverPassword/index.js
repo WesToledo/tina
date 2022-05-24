@@ -24,8 +24,6 @@ import Constants from "expo-constants";
 
 import api from "src/services/api";
 
-import { login } from "actions/auth";
-
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
     <Spinner size="small" status="basic" />

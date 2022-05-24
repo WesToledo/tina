@@ -22,9 +22,56 @@ const INITIAL_USER = {
       //   {
       //   has_done_this_year: null,
       //   year: null,
-      // }
+      //   }
     ],
   },
+  calendar: {
+    events: [],
+  },
+  appointments: [
+    // user: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    // },
+    // date: {
+    //   type: Date,
+    //   required: true,
+    // },
+    // doctor_name: {
+    //   type: String,
+    //   required: true,
+    // },
+    // specialty: {
+    //   // especialidade
+    //   type: String,
+    //   required: true,
+    // },
+    // obs: {
+    //   type: String,
+    // },
+  ],
+  exams: [
+    // user: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    // },
+    // date: {
+    //   type: Date,
+    //   required: true,
+    // },
+    // hospital_name: {
+    //   type: String,
+    //   required: true,
+    // },
+    // name: { // especialidade
+    //   type: String,
+    //   required: true,
+    // },
+    // obs: {
+    //   type: String,
+    // },
+    // address ?
+  ],
 };
 
 const store = (set, get) => ({

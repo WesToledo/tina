@@ -28,6 +28,9 @@ import { CreateMammaReportScreen } from "src/screens/Mamas/CreateMammaReport";
 import { GenitalScreen } from "src/screens/Genital";
 import { ProfileScreen } from "screens/Profile";
 
+import { RemindersScreen } from "screens/Reminders";
+import { CreateExamScreen } from "src/screens/Reminders/CreateExam";
+
 import { ConfigurationScreen } from "screens/Profile/Configuration";
 import useStore from "./store";
 
@@ -37,7 +40,7 @@ const RootStack = createStackNavigator();
 const HomeIcon = (props) => <Icon {...props} name="home-outline" />;
 const VitalsIcon = (props) => <Icon {...props} name="activity-outline" />;
 const HeartIcon = (props) => <Icon {...props} name="heart-outline" />;
-const CloudIcon = (props) => <Icon {...props} name="cloud-download-outline" />;
+const ClipboardIcon = (props) => <Icon {...props} name="clipboard-outline" />;
 const PersonIcon = (props) => <Icon {...props} name="person-outline" />;
 
 const BottomTabBar = ({ navigation, state }) => (
@@ -48,24 +51,10 @@ const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigationTab title="Calendário" icon={HomeIcon} />
     <BottomNavigationTab title="Mamas" icon={VitalsIcon} />
     <BottomNavigationTab title="Saúde Genital" icon={HeartIcon} />
-    {/* <BottomNavigationTab title="Downloads" icon={CloudIcon} /> */}
+    <BottomNavigationTab title="Lembretes" icon={ClipboardIcon} />
     <BottomNavigationTab title="Perfil" icon={PersonIcon} />
   </BottomNavigation>
 );
-
-function MammaNavigator({ navigation }) {
-  return (
-    <RootStack.Navigator>
-      <RootStack.Screen
-        name="CreateMamaReport"
-        component={CreateMammaReportScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-    </RootStack.Navigator>
-  );
-}
 
 function TabNavigator() {
   const state = useStore();
@@ -78,8 +67,8 @@ function TabNavigator() {
         <Screen name="Home" component={HomeScreen} />
         <Screen name="Mama" component={MamaScreen} />
         {/* <Screen name="Creators" component={CreatorsScreen} /> */}
-        {/* <Screen name="Downloads" component={DownloadsScreen} /> */}
         <Screen name="Genital" component={GenitalScreen} />
+        <Screen name="Lembretes" component={RemindersScreen} />
         <Screen name="AlbumDetails" component={ProfileScreen} />
         {/* <Screen name="Orders" component={OrdersScreen} /> */}
       </Navigator>
@@ -145,6 +134,14 @@ export function AppNavigator() {
             <RootStack.Screen
               name="CreateMamaReport"
               component={CreateMammaReportScreen}
+              // options={{
+              //   headerShown: false,
+              // }}
+              options={{ title: "" }}
+            />
+            <RootStack.Screen
+              name="CreateExam"
+              component={CreateExamScreen}
               // options={{
               //   headerShown: false,
               // }}
