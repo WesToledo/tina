@@ -10,6 +10,7 @@ import {
   Button,
   TopNavigationAction,
 } from "@ui-kitten/components";
+import { default as theme } from "../../../custom-theme.json";
 
 import { useNavigation } from "@react-navigation/core";
 
@@ -18,17 +19,53 @@ import { Calendar, CalendarList } from "react-native-calendars";
 import MainHeader from "src/components/MainHeader";
 import ModalAppointmentsList from "./components/modal.appointments.component";
 
+import { FloatingAction } from "react-native-floating-action";
+
 import useStore from "src/store";
 
 var height = Dimensions.get("window").height;
 
-const PillIcon = (props) => <Icon {...props} name="color-picker-outline" />;
+const GearIcon = (props) => <Icon {...props} name="settings-2-outline" />;
+const BellIcon = (props) => <Icon {...props} name="bell-outline" />;
 
 import { format } from "date-fns";
 
 const formatDate = (date) => {
   return format(date, "yyyy-MM-dd");
 };
+
+const actions = [
+  {
+    color: theme["color-primary-500"],
+    text: "Exames",
+    icon: require("src/assets/MAMAS.png"),
+    name: "exams",
+    position: 1,
+  },
+  {
+    color: theme["color-primary-500"],
+    text: "Consultas",
+    icon: require("src/assets/MAMAS.png"),
+    name: "appointments",
+    position: 2,
+  },
+  {
+    color: theme["color-primary-500"],
+    text: "Mamas",
+    icon: require("src/assets/MAMAS.png"),
+    name: "mamma",
+    position: 3,
+  },
+  {
+    color: theme["color-primary-500"],
+    text: "Genitais",
+    icon: require("src/assets/MAMAS.png"),
+    name: "genital",
+    position: 4,
+  },
+];
+
+const ExamIcon = (props) => <Icon {...props} name="file-text" />;
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
@@ -136,71 +173,132 @@ export const HomeScreen = () => {
   }, [exams, appointment, mamma, genital]);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <TopNavigation
-        alignment="left"
-        accessoryLeft={() => (
-          <Avatar size="large" source={require("src/assets/LOGO.png")} />
-        )}
-        accessoryRight={() => (
-          <Button
-            style={styles.button}
-            status={"primary"}
-            appearance={!pill ? "filled" : "ghost"}
-            accessoryRight={PillIcon}
-            onPress={() => setPill(true)}
-          >
-            {!pill ? "Tomar a pílula" : "Tomei a pílula"}
-          </Button>
-        )}
+    <>
+      <SafeAreaView style={styles.safeArea}>
+        <TopNavigation
+          alignment="left"
+          accessoryLeft={() => (
+            <Avatar size="large" source={require("src/assets/LOGO.png")} />
+          )}
+          accessoryRight={() => (
+            <>
+              <TopNavigationAction
+                icon={BellIcon}
+                onPress={() => navigation.navigate("Lembretes")}
+              />
+              <TopNavigationAction
+                icon={GearIcon}
+                onPress={() => navigation.navigate("Configuration")}
+                // onPress={handleNavigateConfigScreen}
+              />
+            </>
+          )}
+        />
+        <Layout style={styles.container}>
+          <Layout style={styles.header}>
+            <Layout style={styles.left}>
+              <Text category="h1" style={styles.text}>
+                {new Date().getDate()}
+              </Text>
+              <Text category="h5" style={styles.text}>
+                {"Maio"}
+              </Text>
+            </Layout>
+            <Layout style={styles.right}>
+              <Button
+                accessoryLeft={ExamIcon}
+                style={styles.button}
+                appearance="filled"
+              />
+            </Layout>
+          </Layout>
+
+          <Calendar
+            markingType="multi-dot"
+            onDayPress={(day) => {
+              console.log("selected day", day);
+
+              if (markedDatesArray[day.dateString]) {
+                setSelectedDay(day.dateString);
+                setVisible(true);
+              }
+            }}
+            markedDates={markedDates}
+            theme={{
+              todayTextColor: "#000",
+
+              dayTextColor: "#000000",
+
+              textDayFontWeight: "bold",
+              textMonthFontWeight: "bold",
+              dotStyle: { width: 6, height: 6 },
+            }}
+          />
+        </Layout>
+      </SafeAreaView>
+      <FloatingAction
+        actions={actions}
+        color={theme["color-primary-500"]}
+        onPressItem={(name) => {
+          const navigations = {
+            appointments: () => {
+              navigation.navigate("CreateAppointment");
+            },
+            mamma: () => {
+              navigation.navigate("CreateMamaReport");
+            },
+            genital: () => {
+              navigation.navigate("CreateGenitalReport");
+            },
+            exams: () => {
+              navigation.navigate("CreateExam");
+            },
+          };
+          console.log(`selected button: ${name}`);
+          navigations[name]();
+        }}
       />
 
-      <CalendarList
-        markingType="multi-dot"
-        // Collection of dates that have to be marked. Default = {}
-        // markedDates={{
-        //   "2022-05-16": {
-        //     selected: true,
-        //     marked: true,
-        //     selectedColor: "blue",
-        //   },
-        //   "2022-05-17": { marked: true },
-        //   "2022-05-18": { marked: true, dotColor: "red", activeOpacity: 0 },
-        //   "2022-05-19": { disabled: true, disableTouchEvent: true },
-        // }}
-        // onLongPress={(day) => {
-        //   console.log("selected day", day);
-        // }}
-        onDayPress={(day) => {
-          console.log("selected day", day);
-
-          if (markedDatesArray[day.dateString]) {
-            setSelectedDay(day.dateString);
-            setVisible(true);
-          }
-        }}
-        markedDates={markedDates}
-        theme={{
-          todayTextColor: "#000",
-
-          dayTextColor: "#000000",
-
-          textDayFontWeight: "bold",
-          textMonthFontWeight: "bold",
-          dotStyle: { width: 6, height: 6 },
-        }}
-      />
       <ModalAppointmentsList
         visible={visible}
         setVisible={setVisible}
         markedDates={markedDatesArray}
         selectedDay={selectedDay}
       />
-    </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
+  header: {
+    marginTop: 30,
+    marginHorizontal: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  left: {
+    flexDirection: "row",
+    alignItems: "baseline",
+  },
+  right: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  },
+  button: {
+    padding: 0,
+    margin: 0,
+  },
+  text: {
+    padding: 0,
+    marginRight: 5,
+  },
   title: {
     padding: 0,
     marginVertical: -5,

@@ -27,6 +27,8 @@ const AppointmenntIcon = (props) => <Icon {...props} name="person" />;
 const ExamIcon = (props) => <Icon {...props} name="file-text" />;
 const GearIcon = (props) => <Icon {...props} name="settings-2-outline" />;
 
+const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
+
 export const RemindersScreen = () => {
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
@@ -40,6 +42,10 @@ export const RemindersScreen = () => {
   function handleNavigateConfigScreen() {
     navigation.navigate("RemindersConfig");
   }
+
+  const BackAction = () => (
+    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+  );
 
   const { exams, appointment } = useStore();
 
@@ -57,9 +63,7 @@ export const RemindersScreen = () => {
       <Layout style={{ flex: 1 }}>
         <TopNavigation
           alignment="left"
-          accessoryLeft={() => (
-            <Avatar size="large" source={require("src/assets/LOGO.png")} />
-          )}
+          accessoryLeft={BackAction}
           accessoryRight={() => (
             <TopNavigationAction
               icon={GearIcon}
@@ -67,7 +71,7 @@ export const RemindersScreen = () => {
             />
           )}
         />
-        <TopNavigation
+        {/* <TopNavigation
           style={styles.top}
           alignment="left"
           accessoryRight={() => (
@@ -90,7 +94,7 @@ export const RemindersScreen = () => {
               Marcar Consulta
             </Button>
           )}
-        />
+        /> */}
 
         <Text category="h4" style={styles.title}>
           Lembretes

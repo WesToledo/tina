@@ -38,7 +38,7 @@ function getFormatedTime(date) {
     min = "0" + min;
   }
 
-  return `${hr}h${min}min`;
+  return `${hr}h${min}`;
 }
 export const CardReminder = ({ reminder }) => {
   const now = new Date();

@@ -15,13 +15,14 @@ function SplashScreen() {
     setFetch,
     setExams,
     setAppointment,
+    user,
   } = useStore();
 
   const navigation = useNavigation();
 
   async function getFacts() {
     try {
-      const { data } = await api.get("/fact");
+      const { data } = await api.get("/fact/" + user._id);
 
       setMammaOcurrency(data.facts.filter(({ type }) => type === "mamma"));
       setGenitalOcurrency(data.facts.filter(({ type }) => type === "genital"));
@@ -33,7 +34,7 @@ function SplashScreen() {
 
   async function getExams() {
     try {
-      const { data } = await api.get("/exam");
+      const { data } = await api.get("/exam/" + user._id);
 
       setExams(data.exams);
 
@@ -45,7 +46,7 @@ function SplashScreen() {
 
   async function getAppointments() {
     try {
-      const { data } = await api.get("/appointment");
+      const { data } = await api.get("/appointment/" + user._id);
 
       setAppointment(data.appointments);
 

@@ -30,7 +30,7 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-export const CreateMammaReportScreen = ({ visible, setVisible }) => {
+export const CreateGenitalReportScreen = ({ visible, setVisible }) => {
   const [checked, setChecked] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -39,38 +39,29 @@ export const CreateMammaReportScreen = ({ visible, setVisible }) => {
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState("");
 
-  const { user, addMammaOcurrency } = useStore();
+  const { user, addGenitalOcurrency } = useStore();
 
   const possibleOcurrencys = [
-    {
-      label: "Caroço Único e Duro",
-    },
-    {
-      label: "Caroço Móvel",
-    },
     {
       label: "Coceira",
     },
     {
-      label: "Dor",
+      label: "Vermelhidão",
     },
     {
-      label: "Sensibilidade",
+      label: "Cheiro Ruim",
     },
     {
-      label: "Inchaço",
+      label: "Verrugas",
     },
     {
-      label: "Endurecimento",
+      label: "Snague fora da menstruação",
     },
     {
-      label: "Retração do mamilo",
+      label: "Corrimento diferente do costume",
     },
     {
-      label: "Alteração da pele",
-    },
-    {
-      label: "Secreção",
+      label: "Cólica",
     },
   ];
 
@@ -102,15 +93,15 @@ export const CreateMammaReportScreen = ({ visible, setVisible }) => {
       const fact = await api.post("/fact/create", {
         user: user._id,
         date: date.toISOString(),
-        type: "mamma",
+        type: "genital",
         problem: checked,
         description,
       });
 
-      addMammaOcurrency(fact.data.fact);
+      addGenitalOcurrency(fact.data.fact);
 
       setLoading(false);
-      navigation.navigate("Main", { screen: "Mamma" });
+      navigation.navigate("Main", { screen: "Genital" });
     } catch (err) {
       setLoading(false);
       console.log("Erro ao criar fato ", err);

@@ -92,7 +92,7 @@ export const CreateAppointmentScreen = ({ visible, setVisible }) => {
           date.getFullYear(),
           date.getMonth(),
           date.getDate(),
-          date.getHours() - 3,
+          date.getHours(),
           date.getMinutes()
         ).toUTCString(),
         doctor_name: doctorName,
@@ -153,8 +153,8 @@ export const CreateAppointmentScreen = ({ visible, setVisible }) => {
               label="Data"
               date={date}
               onSelect={(nextDate) => setDate(nextDate)}
-              startView={CalendarViewModes.YEAR}
-              min={new Date(2000, 0, 0)}
+              // startView={CalendarViewModes.YEAR}
+              min={new Date()}
             />
             <Button
               style={styles.timePicker}

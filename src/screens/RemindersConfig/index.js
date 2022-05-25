@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import Constants from "expo-constants";
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,6 +14,7 @@ import {
   Icon,
   Button,
   Toggle,
+  TopNavigationAction,
 } from "@ui-kitten/components";
 
 import { useNavigation } from "@react-navigation/core";
@@ -21,6 +22,8 @@ import useStore from "src/store";
 
 const SettingsIcon = (props) => <Icon {...props} name="settings-2" />;
 const LogOutIcon = (props) => <Icon {...props} name="log-out" />;
+
+const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
 export const RemindersConfigScreen = () => {
   const navigation = useNavigation();
@@ -43,9 +46,14 @@ export const RemindersConfigScreen = () => {
   const examsState = useToggleState();
   const removeColectorState = useToggleState();
 
+  const BackAction = () => (
+    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+  );
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
       <Layout style={{ flex: 1 }}>
+        <TopNavigation alignment="left" accessoryLeft={BackAction} />
         <Text category="h4" style={styles.title}>
           Lembretes
         </Text>
@@ -79,6 +87,10 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingLeft: 15,
     fontWeight: "bold",
+  },
+  safeArea: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
   },
   subtitle: {
     paddingLeft: 15,

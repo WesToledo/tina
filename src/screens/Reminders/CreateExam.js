@@ -92,7 +92,7 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
           date.getFullYear(),
           date.getMonth(),
           date.getDate(),
-          date.getHours() - 3,
+          date.getHours(),
           date.getMinutes()
         ).toUTCString(),
         hospital_name: hospitalName,
@@ -152,8 +152,8 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
               label="Data"
               date={date}
               onSelect={(nextDate) => setDate(nextDate)}
-              startView={CalendarViewModes.YEAR}
-              min={new Date(2000, 0, 0)}
+              // startView={CalendarViewModes.YEAR}
+              min={new Date()}
             />
             <Button
               style={styles.timePicker}

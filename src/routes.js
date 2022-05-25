@@ -35,6 +35,7 @@ import { CreateAppointmentScreen } from "src/screens/Reminders/CreateAppointment
 import { ConfigurationScreen } from "screens/Profile/Configuration";
 import { RemindersConfigScreen } from "screens/RemindersConfig";
 import useStore from "./store";
+import { CreateGenitalReportScreen } from "./screens/Genital/CreateGenitalReport";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const RootStack = createStackNavigator();
@@ -45,18 +46,18 @@ const HeartIcon = (props) => <Icon {...props} name="heart-outline" />;
 const ClipboardIcon = (props) => <Icon {...props} name="clipboard-outline" />;
 const PersonIcon = (props) => <Icon {...props} name="person-outline" />;
 
-const BottomTabBar = ({ navigation, state }) => (
-  <BottomNavigation
-    selectedIndex={state.index}
-    onSelect={(index) => navigation.navigate(state.routeNames[index])}
-  >
-    <BottomNavigationTab title="Calendário" icon={HomeIcon} />
-    <BottomNavigationTab title="Mamas" icon={VitalsIcon} />
-    <BottomNavigationTab title="Saúde Genital" icon={HeartIcon} />
-    <BottomNavigationTab title="Lembretes" icon={ClipboardIcon} />
-    <BottomNavigationTab title="Perfil" icon={PersonIcon} />
-  </BottomNavigation>
-);
+// const BottomTabBar = ({ navigation, state }) => (
+//   <BottomNavigation
+//     selectedIndex={state.index}
+//     onSelect={(index) => navigation.navigate(state.routeNames[index])}
+//   >
+//     <BottomNavigationTab title="Calendário" icon={HomeIcon} />
+//     <BottomNavigationTab title="Mamas" icon={VitalsIcon} />
+//     <BottomNavigationTab title="Saúde Genital" icon={HeartIcon} />
+//     <BottomNavigationTab title="Lembretes" icon={ClipboardIcon} />
+//     <BottomNavigationTab title="Perfil" icon={PersonIcon} />
+//   </BottomNavigation>
+// );
 
 function TabNavigator() {
   const state = useStore();
@@ -65,21 +66,40 @@ function TabNavigator() {
 
   return (
     <>
-      <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
-        <Screen name="Home" component={HomeScreen} />
-        <Screen name="Mama" component={MamaScreen} />
-        {/* <Screen name="Creators" component={CreatorsScreen} /> */}
-        <Screen name="Genital" component={GenitalScreen} />
-        <Screen name="Lembretes" component={RemindersScreen} />
-        <Screen name="AlbumDetails" component={ProfileScreen} />
-        {/* <Screen name="Orders" component={OrdersScreen} /> */}
-      </Navigator>
+      <RootStack.Navigator>
+        <Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: "", headerShown: false }}
+        />
+        <Screen
+          name="Mama"
+          component={MamaScreen}
+          options={{ title: "", headerShown: false }}
+        />
+        <Screen
+          name="Genital"
+          component={GenitalScreen}
+          options={{ title: "", headerShown: false }}
+        />
+        <Screen
+          name="Lembretes"
+          component={RemindersScreen}
+          options={{ title: "", headerShown: false }}
+        />
+        <Screen
+          name="AlbumDetails"
+          component={ProfileScreen}
+          options={{ title: "", headerShown: false }}
+        />
+      </RootStack.Navigator>
     </>
   );
 }
 
 export function AppNavigator() {
   const authenticated = useStore((state) => state.authenticated);
+
   console.disableYellowBox = true;
 
   return (
@@ -140,11 +160,19 @@ export function AppNavigator() {
               screenOptions={{
                 headerShown: false,
               }}
-              options={{ title: "" }}
+              options={{ title: "", headerShown: false }}
             />
             <RootStack.Screen
               name="CreateMamaReport"
               component={CreateMammaReportScreen}
+              // options={{
+              //   headerShown: false,
+              // }}
+              options={{ title: "" }}
+            />
+            <RootStack.Screen
+              name="CreateGenitalReport"
+              component={CreateGenitalReportScreen}
               // options={{
               //   headerShown: false,
               // }}
