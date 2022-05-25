@@ -16,6 +16,7 @@ function SplashScreen() {
     setExams,
     setAppointment,
     user,
+    setPills,
   } = useStore();
 
   const navigation = useNavigation();
@@ -32,11 +33,22 @@ function SplashScreen() {
     }
   }
 
+  async function getPills() {
+    try {
+      const { data } = await api.get("/pill/" + user._id);
+
+      setPills(data.pills);
+
+      return;
+    } catch (err) {
+      console.log("Erro ao buscar exames ", err);
+    }
+  }
   async function getExams() {
     try {
       const { data } = await api.get("/exam/" + user._id);
 
-      setExams(data.exams);
+      setExams(data.exams ? data.exams : []);
 
       return;
     } catch (err) {
@@ -58,11 +70,14 @@ function SplashScreen() {
 
   useEffect(() => {
     async function fetchData() {
-      await Promise.all([getFacts(), getExams(), getAppointments()]).then(
-        () => {
-          navigation.navigate("Main");
-        }
-      );
+      await Promise.all([
+        getFacts(),
+        getExams(),
+        getAppointments(),
+        getPills(),
+      ]).then(() => {
+        navigation.navigate("Main");
+      });
     }
     fetchData();
   }, []);

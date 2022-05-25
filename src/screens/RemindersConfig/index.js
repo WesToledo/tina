@@ -55,9 +55,8 @@ export const RemindersConfigScreen = () => {
       <Layout style={{ flex: 1 }}>
         <TopNavigation alignment="left" accessoryLeft={BackAction} />
         <Text category="h4" style={styles.title}>
-          Lembretes
+          Configurar Lembretes
         </Text>
-        <Divider />
         <Layout style={styles.list_container}>
           <Layout style={styles.item}>
             <Toggle {...anticoncepcionalState}>

@@ -88,7 +88,7 @@ function TabNavigator() {
           options={{ title: "", headerShown: false }}
         />
         <Screen
-          name="AlbumDetails"
+          name="Profile"
           component={ProfileScreen}
           options={{ title: "", headerShown: false }}
         />

@@ -13,13 +13,17 @@ import {
   Divider,
   Icon,
   Button,
+  TopNavigationAction,
 } from "@ui-kitten/components";
+
+import Constants from "expo-constants";
 
 import { useNavigation } from "@react-navigation/core";
 import useStore from "src/store";
 
 const SettingsIcon = (props) => <Icon {...props} name="settings-2" />;
 const LogOutIcon = (props) => <Icon {...props} name="log-out" />;
+const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
 export const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -30,10 +34,14 @@ export const ProfileScreen = () => {
     signout();
   }
 
+  const BackAction = () => (
+    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+  );
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
+      <TopNavigation alignment="left" accessoryLeft={BackAction} />
       <Layout style={{ flex: 1 }}>
-        <TopNavigation title="Perfil" alignment="center" />
         <Text category="h4" style={styles.title}>
           {user.name}
         </Text>
@@ -69,8 +77,11 @@ export const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+  },
   title: {
-    paddingTop: 15,
     paddingLeft: 15,
     fontWeight: "bold",
   },

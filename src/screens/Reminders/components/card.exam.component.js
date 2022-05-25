@@ -13,6 +13,9 @@ import img from "src/assets/thumb.png";
 
 var width = Dimensions.get("window").width;
 
+const EditIcon = (props) => <Icon {...props} name="edit-outline" />;
+const TrashIcon = (props) => <Icon {...props} name="trash-outline" />;
+
 import { default as theme } from "../../../../custom-theme.json";
 // import { default as theme } from "./custom-theme.json";
 function getFormatedDate(date) {
@@ -56,7 +59,7 @@ export const CardReminder = ({ reminder }) => {
       </TouchableHighlight> */}
 
       <Card
-        status={now > reminderDate ? "basic" : "primary"}
+        status={!reminder.active ? "basic" : "primary"}
         style={styles.card}
         header={
           <View>
@@ -101,8 +104,23 @@ export const CardReminder = ({ reminder }) => {
           </View>
         }
       >
-        <Text>Observações:</Text>
-        {reminder.obs != "" && <Text>{reminder.obs}</Text>}
+        <View style={styles.footerContainer}>
+          {reminder.obs !== "" && <Text>{reminder.obs}</Text>}
+          <>
+            {/* <Button
+              style={styles.footerControl}
+              size="small"
+              status="primary"
+              appearance="ghost"
+              accessoryLeft={TrashIcon}
+            /> */}
+          </>
+          {/* <>
+            <Button style={styles.footerControl} size="small">
+              ACCEPT
+            </Button>
+          </> */}
+        </View>
       </Card>
 
       {/* <View>
@@ -162,6 +180,19 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: 20,
     height: 20,
+  },
+  footerContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    // backgroundColor: "#ccc",
+    marginVertical: -10,
+    marginRight: -20,
+  },
+  footerControl: {
+    marginHorizontal: 2,
+    marginVertical: 2,
   },
 });
 

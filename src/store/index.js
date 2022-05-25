@@ -30,6 +30,7 @@ const INITIAL_USER = {
   },
   exams: [],
   appointment: [],
+  pills: [],
   appointment: [
     // user: {
     //   type: mongoose.Schema.Types.ObjectId,
@@ -106,6 +107,7 @@ const store = (set, get) => ({
 
   exams: [],
   appointment: [],
+  pills: [],
 
   signin: (user, authentication) =>
     set(
@@ -218,6 +220,20 @@ const store = (set, get) => ({
     set(
       produce((oldState) => {
         oldState.appointment = appointment;
+      })
+    ),
+
+  addPill: (pill) =>
+    set(
+      produce((oldState) => {
+        oldState.pills.push(pill);
+      })
+    ),
+
+  setPills: (pills) =>
+    set(
+      produce((oldState) => {
+        oldState.pills = pills;
       })
     ),
 });

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, ScrollView, Dimensions } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Dimensions,
+  ToastAndroid,
+  ScrollView,
+} from "react-native";
 import Constants from "expo-constants";
 import {
   Layout,
@@ -9,6 +16,7 @@ import {
   TopNavigation,
   Button,
   TopNavigationAction,
+  Spinner,
 } from "@ui-kitten/components";
 import { default as theme } from "../../../custom-theme.json";
 
@@ -17,16 +25,23 @@ import { useNavigation } from "@react-navigation/core";
 import { Calendar, CalendarList } from "react-native-calendars";
 
 import MainHeader from "src/components/MainHeader";
-import ModalAppointmentsList from "./components/modal.appointments.component";
+import EventsList from "./components/modal.appointments.component";
 
 import { FloatingAction } from "react-native-floating-action";
 
 import useStore from "src/store";
+import api from "src/services/api";
 
 var height = Dimensions.get("window").height;
 
 const GearIcon = (props) => <Icon {...props} name="settings-2-outline" />;
 const BellIcon = (props) => <Icon {...props} name="bell-outline" />;
+
+const LoadingIndicator = (props) => (
+  <View>
+    <Spinner size="small" status="primary" />
+  </View>
+);
 
 import { format } from "date-fns";
 
@@ -65,19 +80,38 @@ const actions = [
   },
 ];
 
+const monthNames = [
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
+];
+
 const ExamIcon = (props) => <Icon {...props} name="file-text" />;
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
 
   const [pill, setPill] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [markedDatesArray, setMarkedDatesArray] = useState({});
   const [markedDates, setMarkedDates] = useState({});
 
-  const [selectedDay, setSelectedDay] = useState();
+  const [selectedDay, setSelectedDay] = useState(
+    format(new Date(), "yyyy-MM-dd")
+  );
 
-  const { exams, appointment, mamma, genital } = useStore();
+  const { exams, appointment, mamma, genital, addPill, user, pills } =
+    useStore();
 
   const factDot = { key: "fact", color: "red" };
   const examDot = { key: "exam", color: "blue" };
@@ -91,6 +125,38 @@ export const HomeScreen = () => {
     };
     return dots[type];
   };
+
+  async function takePill() {
+    if (pill) {
+      ToastAndroid.show("Pílula já tomada hoje!", ToastAndroid.SHORT);
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const pill = await api.post("/pill/create", {
+        user: user._id,
+        date: new Date().toUTCString(),
+      });
+
+      addPill(pill.data.pill);
+
+      setLoading(false);
+      setPill(true);
+    } catch (err) {
+      setLoading(false);
+      console.log("Erro ao criar pilula ", err);
+    }
+  }
+
+  useEffect(() => {
+    const today = new Date().getDate();
+    const aux = pills.filter(({ date }) => new Date(date).getDate() === today);
+    if (aux.length > 0) {
+      setPill(true);
+    }
+  }, []);
 
   useEffect(() => {
     const baseDate = new Date();
@@ -161,16 +227,51 @@ export const HomeScreen = () => {
 
     for (const [key, value] of Object.entries(markedDatesArray)) {
       markedDates[key] = {
-        dots: [...value.map((appointment) => appointment.dot)],
+        selected: key == selectedDay,
+
+        customStyles: key == selectedDay && {
+          container: {
+            backgroundColor: "green",
+          },
+          text: {
+            color: "black",
+            fontWeight: "bold",
+          },
+        },
+
+        textColor: "white",
+        marked: true,
+        dotColor: "white",
+        dots:
+          key != selectedDay
+            ? [...value.map((appointment) => appointment.dot)]
+            : [
+                ...value.map((appointment) => {
+                  return { ...appointment.dot, color: "white" };
+                }),
+              ],
       };
     }
+
+    // markedDates[key] = {
+    //   customStyles: {
+    //     container: {
+    //       backgroundColor: "green",
+    //     },
+    //     text: {
+    //       color: "black",
+    //       fontWeight: "bold",
+    //     },
+    //   },
+    //   dots: [...value.map((appointment) => appointment.dot)],
+    // };
 
     // markedDates[formatDate(baseDate)] = { selected: true };
 
     setMarkedDates(markedDates);
 
     console.warn("marked", markedDates);
-  }, [exams, appointment, mamma, genital]);
+  }, [exams, appointment, mamma, genital, selectedDay]);
 
   return (
     <>
@@ -188,53 +289,73 @@ export const HomeScreen = () => {
               />
               <TopNavigationAction
                 icon={GearIcon}
-                onPress={() => navigation.navigate("Configuration")}
+                onPress={() =>
+                  navigation.navigate("Main", { screen: "Profile" })
+                }
                 // onPress={handleNavigateConfigScreen}
               />
             </>
           )}
         />
-        <Layout style={styles.container}>
-          <Layout style={styles.header}>
-            <Layout style={styles.left}>
-              <Text category="h1" style={styles.text}>
-                {new Date().getDate()}
-              </Text>
-              <Text category="h5" style={styles.text}>
-                {"Maio"}
-              </Text>
+        <ScrollView style={styles.container}>
+          <Layout>
+            <Layout style={styles.header}>
+              <Layout style={styles.left}>
+                <Text category="h1" style={styles.text}>
+                  {new Date(selectedDay).getDate() + 1}
+                </Text>
+                <Text category="h5" style={styles.text}>
+                  {monthNames[new Date(selectedDay).getMonth()]}
+                </Text>
+              </Layout>
+              <Layout style={styles.right}>
+                {!loading ? (
+                  <Button
+                    accessoryLeft={ExamIcon}
+                    style={styles.button}
+                    appearance={pill ? "ghost" : "filled"}
+                    onPress={takePill}
+                  />
+                ) : (
+                  <Button
+                    accessoryLeft={LoadingIndicator}
+                    style={styles.button}
+                    appearance="ghost"
+                  />
+                )}
+              </Layout>
             </Layout>
-            <Layout style={styles.right}>
-              <Button
-                accessoryLeft={ExamIcon}
-                style={styles.button}
-                appearance="filled"
-              />
-            </Layout>
+
+            <Calendar
+              markingType="multi-dot"
+              onDayPress={(day) => {
+                console.log("selected day", day);
+
+                if (markedDatesArray[day.dateString]) {
+                  setSelectedDay(day.dateString);
+                }
+              }}
+              markedDates={markedDates}
+              theme={{
+                todayTextColor: "#000",
+
+                dayTextColor: "#000000",
+
+                textDayFontWeight: "bold",
+                textMonthFontWeight: "bold",
+                selectedDayBackgroundColor: "purple",
+                // dotStyle: { width: 6, height: 6 },
+              }}
+            />
+
+            <EventsList
+              visible={visible}
+              setVisible={setVisible}
+              markedDates={markedDatesArray}
+              selectedDay={selectedDay}
+            />
           </Layout>
-
-          <Calendar
-            markingType="multi-dot"
-            onDayPress={(day) => {
-              console.log("selected day", day);
-
-              if (markedDatesArray[day.dateString]) {
-                setSelectedDay(day.dateString);
-                setVisible(true);
-              }
-            }}
-            markedDates={markedDates}
-            theme={{
-              todayTextColor: "#000",
-
-              dayTextColor: "#000000",
-
-              textDayFontWeight: "bold",
-              textMonthFontWeight: "bold",
-              dotStyle: { width: 6, height: 6 },
-            }}
-          />
-        </Layout>
+        </ScrollView>
       </SafeAreaView>
       <FloatingAction
         actions={actions}
@@ -257,13 +378,6 @@ export const HomeScreen = () => {
           console.log(`selected button: ${name}`);
           navigations[name]();
         }}
-      />
-
-      <ModalAppointmentsList
-        visible={visible}
-        setVisible={setVisible}
-        markedDates={markedDatesArray}
-        selectedDay={selectedDay}
       />
     </>
   );

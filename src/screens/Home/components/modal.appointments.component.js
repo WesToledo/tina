@@ -22,12 +22,6 @@ import api from "src/services/api";
 
 import useStore from "src/store";
 
-const LoadingIndicator = (props) => (
-  <View style={[props.style, styles.indicator]}>
-    <Spinner size="small" status="basic" />
-  </View>
-);
-
 function getFormatedTime(date) {
   var hr = date.getHours();
   var min = date.getMinutes();
@@ -38,12 +32,7 @@ function getFormatedTime(date) {
 
   return `${hr}h${min}`;
 }
-const ModalAppointmentsList = ({
-  visible,
-  setVisible,
-  markedDates,
-  selectedDay,
-}) => {
+const EventsList = ({ visible, setVisible, markedDates, selectedDay }) => {
   const [checked, setChecked] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -54,59 +43,43 @@ const ModalAppointmentsList = ({
 
   return (
     <View style={styles.container}>
-      <Modal
-        style={styles.modal}
-        visible={visible}
-        backdropStyle={styles.backdrop}
-      >
-        <ScrollView>
-          <Card disabled={true} style={styles.card}>
-            <Text category="h6">Eventos</Text>
+      <ScrollView>
+        <Card disabled={true} style={styles.card}>
+          <Text category="h6">Eventos</Text>
 
-            <View style={styles.content}>
-              {selectedDay &&
-                markedDates[selectedDay].map(
-                  ({ date, title, subtitle, obs, type }) => (
-                    <Card
-                      style={styles.card}
-                      status={
-                        type == "fact"
-                          ? "danger"
-                          : type === "exam"
-                          ? "info"
-                          : "success"
-                      }
-                    >
-                      <View>
-                        <Text category="h6">{title}</Text>
-                        <Text category="s1">{subtitle}</Text>
-                        {type != "fact" && (
-                          <Text
-                            category="s1"
-                            // status="primary"
-                            style={{ fontWeight: "bold" }}
-                          >
-                            {getFormatedTime(new Date(date))}
-                          </Text>
-                        )}
-                      </View>
-                    </Card>
-                  )
-                )}
-            </View>
-
-            <View style={styles.footer}>
-              <Button
-                style={styles.button}
-                appearance="filled"
-                onPress={() => setVisible(false)}
-              >
-                Voltar
-              </Button>
-            </View>
-          </Card>
-        </ScrollView>
-      </Modal>
+          <View style={styles.content}>
+            {selectedDay &&
+              markedDates[selectedDay]?.map(
+                ({ date, title, subtitle, obs, type }) => (
+                  <Card
+                    style={styles.card}
+                    status={
+                      type == "fact"
+                        ? "danger"
+                        : type === "exam"
+                        ? "info"
+                        : "success"
+                    }
+                  >
+                    <View>
+                      <Text category="h6">{title}</Text>
+                      <Text category="s1">{subtitle}</Text>
+                      {type != "fact" && (
+                        <Text
+                          category="s1"
+                          // status="primary"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          {getFormatedTime(new Date(date))}
+                        </Text>
+                      )}
+                    </View>
+                  </Card>
+                )
+              )}
+          </View>
+        </Card>
+      </ScrollView>
     </View>
   );
 };
@@ -137,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalAppointmentsList;
+export default EventsList;
