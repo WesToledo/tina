@@ -203,7 +203,9 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
             <Button
               style={styles.button}
               appearance="outline"
-              onPress={() => setVisible(false)}
+              onPress={() =>
+                navigation.navigate("Main", { screen: "Lembretes" })
+              }
             >
               Cancelar
             </Button>

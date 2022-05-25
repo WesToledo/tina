@@ -80,6 +80,7 @@ function TabNavigator() {
 
 export function AppNavigator() {
   const authenticated = useStore((state) => state.authenticated);
+  console.disableYellowBox = true;
 
   return (
     <NavigationContainer>
