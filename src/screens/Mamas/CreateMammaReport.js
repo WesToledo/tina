@@ -130,7 +130,8 @@ export const CreateMammaReportScreen = ({ visible, setVisible }) => {
             date={date}
             onSelect={(nextDate) => setDate(nextDate)}
             startView={CalendarViewModes.YEAR}
-            min={new Date(2000, 0, 0)}
+            min={new Date(2022, 4, 0)}
+            max={new Date()}
           />
           <View
             style={{

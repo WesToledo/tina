@@ -24,36 +24,37 @@ const ListCards = ({ reminders }) => {
 
   return (
     <Layout style={styles.container}>
-      <ScrollView>
-        <Layout>
-          <Text appearance="hint" category="h6">
-            Lembretes ativos
-          </Text>
-          {aux
-            .filter((reminder) => reminder.active)
-            .map((reminder, index) => (
-              <>
-                <CardReminder key={index} reminder={reminder} />
-              </>
-            ))}
+      {reminders.length == 0 ? (
+        <Text appearance="hint" category="h6" style={styles.title}>
+          Nenhum lembrete diponível
+        </Text>
+      ) : (
+        <ScrollView>
+          <Layout>
+            <Text appearance="hint" category="h6">
+              Lembretes ativos
+            </Text>
+            {aux
+              .filter((reminder) => reminder.active)
+              .map((reminder, index) => (
+                <>
+                  <CardReminder key={index} reminder={reminder} />
+                </>
+              ))}
 
-          <Text appearance="hint" category="h6" style={{ marginVertical: 5 }}>
-            Lembretes passados
-          </Text>
-          {aux
-            .filter((reminder) => !reminder.active)
-            .map((reminder, index) => (
-              <>
-                <CardReminder key={index} reminder={reminder} />
-              </>
-            ))}
-        </Layout>
-        {reminders.length == 0 && (
-          <Text appearance="hint" category="h6" style={styles.title}>
-            Nenhum problema reportado ainda
-          </Text>
-        )}
-      </ScrollView>
+            <Text appearance="hint" category="h6" style={{ marginVertical: 5 }}>
+              Lembretes passados
+            </Text>
+            {aux
+              .filter((reminder) => !reminder.active)
+              .map((reminder, index) => (
+                <>
+                  <CardReminder key={index} reminder={reminder} />
+                </>
+              ))}
+          </Layout>
+        </ScrollView>
+      )}
     </Layout>
   );
 };

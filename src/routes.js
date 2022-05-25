@@ -37,6 +37,9 @@ import { RemindersConfigScreen } from "screens/RemindersConfig";
 import useStore from "./store";
 import { CreateGenitalReportScreen } from "./screens/Genital/CreateGenitalReport";
 
+import { ConfigReminderPillScreen } from "./screens/RemindersConfig/ConfigReminderPill";
+import { ConfigReminderColectorScreen } from "./screens/RemindersConfig/ConfigReminderColector";
+
 const { Navigator, Screen } = createBottomTabNavigator();
 const RootStack = createStackNavigator();
 
@@ -189,6 +192,22 @@ export function AppNavigator() {
             <RootStack.Screen
               name="CreateAppointment"
               component={CreateAppointmentScreen}
+              // options={{
+              //   headerShown: false,
+              // }}
+              options={{ title: "" }}
+            />
+            <RootStack.Screen
+              name="ConfigReminderPillScreen"
+              component={ConfigReminderPillScreen}
+              // options={{
+              //   headerShown: false,
+              // }}
+              options={{ title: "" }}
+            />
+            <RootStack.Screen
+              name="ConfigReminderColectorScreen"
+              component={ConfigReminderColectorScreen}
               // options={{
               //   headerShown: false,
               // }}

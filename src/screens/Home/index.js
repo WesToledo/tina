@@ -225,6 +225,12 @@ export const HomeScreen = () => {
 
     setMarkedDatesArray(markedDatesArray);
 
+    if (!markedDates[selectedDay]) {
+      markedDates[selectedDay] = {
+        selected: true,
+      };
+    }
+
     for (const [key, value] of Object.entries(markedDatesArray)) {
       markedDates[key] = {
         selected: key == selectedDay,
@@ -331,9 +337,7 @@ export const HomeScreen = () => {
               onDayPress={(day) => {
                 console.log("selected day", day);
 
-                if (markedDatesArray[day.dateString]) {
-                  setSelectedDay(day.dateString);
-                }
+                setSelectedDay(day.dateString);
               }}
               markedDates={markedDates}
               theme={{

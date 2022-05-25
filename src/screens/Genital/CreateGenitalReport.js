@@ -122,6 +122,7 @@ export const CreateGenitalReportScreen = ({ visible, setVisible }) => {
             onSelect={(nextDate) => setDate(nextDate)}
             startView={CalendarViewModes.YEAR}
             min={new Date(2000, 0, 0)}
+            max={new Date()}
           />
           <View
             style={{

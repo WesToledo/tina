@@ -62,9 +62,20 @@ export const RemindersConfigScreen = () => {
             <Toggle {...anticoncepcionalState}>
               Lembrete Anticoncepcional
             </Toggle>
+
+            <TopNavigationAction
+              disabled={!anticoncepcionalState.checked}
+              icon={SettingsIcon}
+              onPress={() => navigation.navigate("ConfigReminderPillScreen")}
+            />
           </Layout>
           <Layout style={styles.item}>
             <Toggle {...waterState}>Lembrete Água</Toggle>
+            {/* <TopNavigationAction
+              disabled={!anticoncepcionalState.checked}
+              icon={SettingsIcon}
+              onPress={() => navigation.navigate("ConfigReminderPillScreen")}
+            /> */}
           </Layout>
           <Layout style={styles.item}>
             <Toggle {...appointmentsState}>Lembrete Consultas</Toggle>
@@ -74,6 +85,14 @@ export const RemindersConfigScreen = () => {
           </Layout>
           <Layout style={styles.item}>
             <Toggle {...removeColectorState}>Lembrete Remover Coletor</Toggle>
+
+            <TopNavigationAction
+              disabled={!anticoncepcionalState.checked}
+              icon={SettingsIcon}
+              onPress={() =>
+                navigation.navigate("ConfigReminderColectorScreen")
+              }
+            />
           </Layout>
         </Layout>
       </Layout>
@@ -96,7 +115,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingBottom: 15,
   },
-  item: { justifyContent: "flex-start", marginVertical: 10 },
+  item: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "stretch",
+    marginVertical: 10,
+  },
   list_container: {
     marginHorizontal: 15,
     marginVertical: 15,

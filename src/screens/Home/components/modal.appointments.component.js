@@ -44,41 +44,43 @@ const EventsList = ({ visible, setVisible, markedDates, selectedDay }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Card disabled={true} style={styles.card}>
-          <Text category="h6">Eventos</Text>
+        {markedDates[selectedDay] && (
+          <Card disabled={true} style={styles.card}>
+            <Text category="h6">Eventos</Text>
 
-          <View style={styles.content}>
-            {selectedDay &&
-              markedDates[selectedDay]?.map(
-                ({ date, title, subtitle, obs, type }) => (
-                  <Card
-                    style={styles.card}
-                    status={
-                      type == "fact"
-                        ? "danger"
-                        : type === "exam"
-                        ? "info"
-                        : "success"
-                    }
-                  >
-                    <View>
-                      <Text category="h6">{title}</Text>
-                      <Text category="s1">{subtitle}</Text>
-                      {type != "fact" && (
-                        <Text
-                          category="s1"
-                          // status="primary"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          {getFormatedTime(new Date(date))}
-                        </Text>
-                      )}
-                    </View>
-                  </Card>
-                )
-              )}
-          </View>
-        </Card>
+            <View style={styles.content}>
+              {selectedDay &&
+                markedDates[selectedDay]?.map(
+                  ({ date, title, subtitle, obs, type }) => (
+                    <Card
+                      style={styles.card}
+                      status={
+                        type == "fact"
+                          ? "danger"
+                          : type === "exam"
+                          ? "info"
+                          : "success"
+                      }
+                    >
+                      <View>
+                        <Text category="h6">{title}</Text>
+                        <Text category="s1">{subtitle}</Text>
+                        {type != "fact" && (
+                          <Text
+                            category="s1"
+                            // status="primary"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            {getFormatedTime(new Date(date))}
+                          </Text>
+                        )}
+                      </View>
+                    </Card>
+                  )
+                )}
+            </View>
+          </Card>
+        )}
       </ScrollView>
     </View>
   );
