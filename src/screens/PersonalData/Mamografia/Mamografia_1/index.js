@@ -19,6 +19,7 @@ import {
   Input,
   Icon,
 } from "@ui-kitten/components";
+import { useNavigation } from "@react-navigation/native";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -32,6 +33,8 @@ export const Mamografia_1 = ({ handleNextScreen }) => {
 
   const { addMammographyData } = useStore();
 
+  const navigation = useNavigation();
+
   function handleNextButton() {
     addMammographyData([
       {
@@ -40,6 +43,10 @@ export const Mamografia_1 = ({ handleNextScreen }) => {
       },
     ]);
     handleNextScreen(1);
+  }
+
+  function handleCancel() {
+    navigation.navigate("Splash");
   }
 
   return (
@@ -73,13 +80,24 @@ export const Mamografia_1 = ({ handleNextScreen }) => {
           </RadioGroup>
 
           {!loading ? (
-            <Button
-              style={styles.button}
-              size="medium"
-              onPress={handleNextButton}
-            >
-              Próximo
-            </Button>
+            <>
+              <Button
+                style={styles.button}
+                size="medium"
+                onPress={handleNextButton}
+              >
+                Próximo
+              </Button>
+
+              <Button
+                style={styles.button_cancel}
+                appearance="ghost"
+                size="medium"
+                onPress={handleCancel}
+              >
+                Responder depois
+              </Button>
+            </>
           ) : (
             <Button
               style={styles.button}

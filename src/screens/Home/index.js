@@ -6,8 +6,13 @@ import {
   Dimensions,
   ToastAndroid,
   ScrollView,
+  Image,
 } from "react-native";
 import Constants from "expo-constants";
+
+import Notification, {
+  schedulePushNotification,
+} from "src/services/notifications";
 import {
   Layout,
   Text,
@@ -18,6 +23,7 @@ import {
   TopNavigationAction,
   Spinner,
 } from "@ui-kitten/components";
+
 import { default as theme } from "../../../custom-theme.json";
 
 import { useNavigation } from "@react-navigation/core";
@@ -32,6 +38,11 @@ import { FloatingAction } from "react-native-floating-action";
 import useStore from "src/store";
 import api from "src/services/api";
 
+const exams = require("../../assets/exams.png");
+const appointment = require("src/assets/appointment.png");
+const mamma = require("src/assets/mamma.png");
+const genital = require("src/assets/genital.png");
+
 var height = Dimensions.get("window").height;
 
 const GearIcon = (props) => <Icon {...props} name="settings-2-outline" />;
@@ -44,6 +55,7 @@ const LoadingIndicator = (props) => (
 );
 
 import { format } from "date-fns";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 const formatDate = (date) => {
   return format(date, "yyyy-MM-dd");
@@ -51,30 +63,50 @@ const formatDate = (date) => {
 
 const actions = [
   {
-    color: theme["color-primary-500"],
+    color: "red",
     text: "Exames",
-    icon: require("src/assets/EXAMES.png"),
+    icon: (
+      <Image
+        source={require("../../assets/exams.png")}
+        style={{ width: 45, height: 45 }}
+      />
+    ),
     name: "exams",
     position: 1,
   },
   {
     color: theme["color-primary-500"],
     text: "Consultas",
-    icon: require("src/assets/MAMAS.png"),
+    icon: (
+      <Image
+        source={require("../../assets/appointment.png")}
+        style={{ width: 45, height: 45 }}
+      />
+    ),
     name: "appointments",
     position: 2,
   },
   {
     color: theme["color-primary-500"],
     text: "Mamas",
-    icon: require("src/assets/MAMAS.png"),
+    icon: (
+      <Image
+        source={require("../../assets/mamma.png")}
+        style={{ width: 45, height: 45 }}
+      />
+    ),
     name: "mamma",
     position: 3,
   },
   {
     color: theme["color-primary-500"],
-    text: "Genitais",
-    icon: require("src/assets/MAMAS.png"),
+    text: "Partes Íntimas",
+    icon: (
+      <Image
+        source={require("../../assets/genital.png")}
+        style={{ width: 45, height: 45 }}
+      />
+    ),
     name: "genital",
     position: 4,
   },
@@ -280,12 +312,17 @@ export const HomeScreen = () => {
   }, [exams, appointment, mamma, genital, selectedDay]);
 
   return (
-    <>
+    <Layout style={{ flex: 1 }}>
       <SafeAreaView style={styles.safeArea}>
         <TopNavigation
           alignment="left"
+          title="TINA"
           accessoryLeft={() => (
-            <Avatar size="large" source={require("src/assets/LOGO.png")} />
+            <Avatar
+              size="large"
+              source={require("src/assets/LOGO.png")}
+              style={{ marginRight: 10 }}
+            />
           )}
           accessoryRight={() => (
             <>
@@ -316,12 +353,16 @@ export const HomeScreen = () => {
               </Layout>
               <Layout style={styles.right}>
                 {!loading ? (
-                  <Button
-                    accessoryLeft={ExamIcon}
-                    style={styles.button}
-                    appearance={pill ? "ghost" : "filled"}
-                    onPress={takePill}
-                  />
+                  <TouchableHighlight onPress={takePill}>
+                    <Image
+                      style={{ width: 50, height: 50 }}
+                      source={
+                        pill
+                          ? require("../../assets/taked_pill.png")
+                          : require("../../assets/not_take_pill.png")
+                      }
+                    />
+                  </TouchableHighlight>
                 ) : (
                   <Button
                     accessoryLeft={LoadingIndicator}
@@ -362,6 +403,7 @@ export const HomeScreen = () => {
         </ScrollView>
       </SafeAreaView>
       <FloatingAction
+        tintColor={null}
         actions={actions}
         color={theme["color-primary-500"]}
         onPressItem={(name) => {
@@ -383,7 +425,7 @@ export const HomeScreen = () => {
           navigations[name]();
         }}
       />
-    </>
+    </Layout>
   );
 };
 

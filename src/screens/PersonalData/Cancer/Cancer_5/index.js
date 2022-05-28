@@ -17,9 +17,12 @@ import {
   Text,
   Spinner,
   Input,
+  Icon,
 } from "@ui-kitten/components";
 
 const tina2 = require("./tina2.png");
+
+const InfoIcon = (props) => <Icon fill="#fff" {...props} name="info-outline" />;
 
 export const Cancer_5 = () => {
   const navigation = useNavigation();
@@ -35,8 +38,13 @@ export const Cancer_5 = () => {
           <Text category="h4" style={styles.text}>
             Dados Clínicos
           </Text>
+          <Button
+            status="primary"
+            appearance="ghost"
+            accessoryLeft={InfoIcon}
+          />
         </View>
-        <View>
+        <View style={styles.image_container}>
           <Image source={tina2} style={styles.image} />
         </View>
       </View>
@@ -73,10 +81,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
+
+  image_container: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    marginVertical: 20,
+  },
   image: {
+    width: 410,
+    height: 320,
     // width: "100%",
   },
   form: {

@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+
+import * as Notifications from "expo-notifications";
 
 import {
   BottomNavigation,
@@ -49,19 +50,6 @@ const HeartIcon = (props) => <Icon {...props} name="heart-outline" />;
 const ClipboardIcon = (props) => <Icon {...props} name="clipboard-outline" />;
 const PersonIcon = (props) => <Icon {...props} name="person-outline" />;
 
-// const BottomTabBar = ({ navigation, state }) => (
-//   <BottomNavigation
-//     selectedIndex={state.index}
-//     onSelect={(index) => navigation.navigate(state.routeNames[index])}
-//   >
-//     <BottomNavigationTab title="Calendário" icon={HomeIcon} />
-//     <BottomNavigationTab title="Mamas" icon={VitalsIcon} />
-//     <BottomNavigationTab title="Saúde Genital" icon={HeartIcon} />
-//     <BottomNavigationTab title="Lembretes" icon={ClipboardIcon} />
-//     <BottomNavigationTab title="Perfil" icon={PersonIcon} />
-//   </BottomNavigation>
-// );
-
 function TabNavigator() {
   const state = useStore();
 
@@ -101,7 +89,7 @@ function TabNavigator() {
 }
 
 export function AppNavigator() {
-  const authenticated = useStore((state) => state.authenticated);
+  const { authenticated, user, jump_questions } = useStore();
 
   console.disableYellowBox = true;
 
@@ -127,19 +115,23 @@ export function AppNavigator() {
               component={RecoverPasswordScreen}
               options={{ title: "" }}
             />
-            <RootStack.Screen
-              name="PersonalData"
-              component={CancerQuestionsScreen}
-              options={{ title: "", headerShown: false }}
-            />
-            <RootStack.Screen
-              name="Mamografia"
-              component={MamografiaQuestionsScreen}
-              options={{ title: "", headerShown: false }}
-            />
           </>
         ) : (
           <>
+            {!user.clinical_data.aswered && (
+              <>
+                <RootStack.Screen
+                  name="PersonalData"
+                  component={CancerQuestionsScreen}
+                  options={{ title: "", headerShown: false }}
+                />
+                <RootStack.Screen
+                  name="Mamografia"
+                  component={MamografiaQuestionsScreen}
+                  options={{ title: "", headerShown: false }}
+                />
+              </>
+            )}
             <RootStack.Screen
               name="Splash"
               component={SplashScreen}

@@ -35,17 +35,25 @@ export const SignInScreen = ({ navigation }) => {
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
   const [loading, setLoading] = useState(false);
 
-  const { signin } = useStore();
+  const { signin, authenticate } = useStore();
 
   async function handleSubmit() {
     setLoading(true);
     try {
+      console.warn("form.email", form.email);
+      console.warn("form.password", form.password);
+
       const response = await api.post("/login", {
         email: form.email,
         password: form.password,
       });
 
+      console.warn("awsdasdasdas", response.data.user);
+
       signin(response.data.user, response.data.user.clinical_data.answered);
+
+      authenticate();
+
       setLoading(false);
       navigation.navigate("PersonalData");
     } catch (err) {

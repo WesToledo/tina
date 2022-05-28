@@ -28,59 +28,13 @@ const INITIAL_USER = {
   calendar: {
     events: [],
   },
-  exams: [],
-  appointment: [],
-  pills: [],
-  appointment: [
-    // user: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "User",
-    // },
-    // date: {
-    //   type: Date,
-    //   required: true,
-    // },
-    // doctor_name: {
-    //   type: String,
-    //   required: true,
-    // },
-    // specialty: {
-    //   // especialidade
-    //   type: String,
-    //   required: true,
-    // },
-    // obs: {
-    //   type: String,
-    // },
-  ],
-  exams: [
-    // user: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "User",
-    // },
-    // date: {
-    //   type: Date,
-    //   required: true,
-    // },
-    // hospital_name: {
-    //   type: String,
-    //   required: true,
-    // },
-    // name: { // especialidade
-    //   type: String,
-    //   required: true,
-    // },
-    // obs: {
-    //   type: String,
-    // },
-    // address ?
-  ],
 };
 
 const store = (set, get) => ({
   // CONFIG APP
 
   authenticated: false,
+  jump_questions: false,
 
   alreadyFetch: false,
 
@@ -113,14 +67,24 @@ const store = (set, get) => ({
     set(
       produce((oldState) => {
         oldState.user = user;
-        oldState.authenticated = authentication;
+        oldState.jump_questions = authentication;
       })
     ),
+  setQuestionsAnswer: () =>
+    set(
+      produce((oldState) => {
+        oldState.jump_questions = true;
+      })
+    ),
+
   signout: () =>
     set(
       produce((oldState) => {
         oldState.user = INITIAL_USER;
         oldState.authenticated = false;
+        oldState.exams = [];
+        oldState.appointment = [];
+        oldState.pills = [];
       })
     ),
   authenticate: () =>

@@ -33,7 +33,8 @@ export const Cancer_1 = ({ handleNextScreen }) => {
 
   const navigation = useNavigation();
 
-  const { isCancerCasesInFamily: setCancerCases } = useStore();
+  const { isCancerCasesInFamily: setCancerCases, setQuestionsAnswer } =
+    useStore();
 
   function handleNextButton() {
     // se não tem parentesco com câncer de mama 1
@@ -45,6 +46,10 @@ export const Cancer_1 = ({ handleNextScreen }) => {
       setCancerCases(false);
       navigation.navigate("Mamografia");
     }
+  }
+
+  function handleCancel() {
+    navigation.navigate("Splash");
   }
 
   return (
@@ -90,13 +95,23 @@ export const Cancer_1 = ({ handleNextScreen }) => {
           </RadioGroup>
 
           {!loading ? (
-            <Button
-              style={styles.button}
-              size="medium"
-              onPress={handleNextButton}
-            >
-              Próximo
-            </Button>
+            <>
+              <Button
+                style={styles.button}
+                size="medium"
+                onPress={handleNextButton}
+              >
+                Próximo
+              </Button>
+              <Button
+                style={styles.button_cancel}
+                appearance="ghost"
+                size="medium"
+                onPress={handleCancel}
+              >
+                Responder depois
+              </Button>
+            </>
           ) : (
             <Button
               style={styles.button}
@@ -145,9 +160,8 @@ const styles = StyleSheet.create({
   input: {
     marginVertical: 8,
   },
-  button: {
-    // marginVertical: 15,
-    // marginBottom: 15,
+  button_cancel: {
+    marginTop: 15,
   },
   checkbox: {
     fontSize: 20,

@@ -16,12 +16,15 @@ import {
   Text,
   Spinner,
   Input,
+  Icon,
 } from "@ui-kitten/components";
 
 import api from "src/services/api";
 import useStore from "src/store";
 
-const tina1 = require("./tina1.png");
+const tina1 = require("./tina3.png");
+
+const InfoIcon = (props) => <Icon fill="#fff" {...props} name="info-outline" />;
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -33,7 +36,7 @@ export const Mamografia_2 = () => {
   const [loading, setLoading] = useState(false);
 
   const clinicalData = useStore((state) => state.user.clinical_data);
-  const { authenticate, user } = useStore();
+  const { user, setQuestionsAnswer } = useStore();
 
   async function handleSubmit() {
     setLoading(true);
@@ -42,8 +45,7 @@ export const Mamografia_2 = () => {
       await api.post("/user/clinical-data/set/" + user._id, {
         clinical_data: clinicalData,
       });
-
-      authenticate();
+      setQuestionsAnswer();
     } catch (err) {
       setLoading(false);
       console.log("Erro ao enviar dados clínicos ", err);
@@ -57,6 +59,11 @@ export const Mamografia_2 = () => {
           <Text category="h4" style={styles.text}>
             Dados Clínicos
           </Text>
+          <Button
+            status="primary"
+            appearance="ghost"
+            accessoryLeft={InfoIcon}
+          />
         </View>
         <View>
           <Image source={tina1} style={styles.image} />
@@ -105,10 +112,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
+  image_container: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    marginVertical: 20,
+  },
   image: {
+    width: 410,
+    height: 320,
     // width: "100%",
   },
   form: {

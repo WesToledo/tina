@@ -19,6 +19,7 @@ import {
   Icon,
   CheckBox,
 } from "@ui-kitten/components";
+import { useNavigation } from "@react-navigation/native";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -28,9 +29,11 @@ const LoadingIndicator = (props) => (
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back-outline" />;
 
-export const Cancer_2 = ({ navigation, handleNextScreen, setClinicalData }) => {
+export const Cancer_2 = ({ handleNextScreen, setClinicalData }) => {
   const [checked, setChecked] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  const navigation = useNavigation();
 
   const { addCancerCaseInFamily } = useStore();
 
@@ -46,6 +49,10 @@ export const Cancer_2 = ({ navigation, handleNextScreen, setClinicalData }) => {
       },
     ]);
     handleNextScreen(1);
+  }
+
+  function handleCancel() {
+    navigation.navigate("Splash");
   }
 
   return (
@@ -137,9 +144,23 @@ export const Cancer_2 = ({ navigation, handleNextScreen, setClinicalData }) => {
           </View>
 
           {!loading ? (
-            <Button style={styles.button} size="medium" onPress={handleSubmit}>
-              Próximo
-            </Button>
+            <>
+              <Button
+                style={styles.button}
+                size="medium"
+                onPress={handleSubmit}
+              >
+                Próximo
+              </Button>
+              <Button
+                style={styles.button_cancel}
+                appearance="ghost"
+                size="medium"
+                onPress={handleCancel}
+              >
+                Responder depois
+              </Button>
+            </>
           ) : (
             <Button
               style={styles.button}
