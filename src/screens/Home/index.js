@@ -53,7 +53,7 @@ const actions = [
   {
     color: theme["color-primary-500"],
     text: "Exames",
-    icon: require("src/assets/MAMAS.png"),
+    icon: require("src/assets/EXAMES.png"),
     name: "exams",
     position: 1,
   },

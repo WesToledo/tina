@@ -1,22 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Image,
-  Dimensions,
-  KeyboardAvoidingView,
-} from "react-native";
-import {
-  Button,
-  Radio,
-  RadioGroup,
-  Layout,
-  Text,
-  Spinner,
-  Input,
-} from "@ui-kitten/components";
+import { StyleSheet, View, Image, KeyboardAvoidingView } from "react-native";
+import { Button, Text, Spinner, Input } from "@ui-kitten/components";
 import { useDispatch } from "react-redux";
 
 const tina1 = require("./tina1.png");
