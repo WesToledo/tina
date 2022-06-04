@@ -3,14 +3,6 @@ import * as Notifications from "expo-notifications";
 import React, { useState, useEffect, useRef } from "react";
 import { Text, View, Button, Platform } from "react-native";
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-});
-
 export function HomeScreen() {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);

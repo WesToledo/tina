@@ -22,7 +22,8 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.tina.tina"
+      "package": "com.tina.tina",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -89,7 +89,7 @@ function TabNavigator() {
 }
 
 export function AppNavigator() {
-  const { authenticated, user, jump_questions } = useStore();
+  const { authenticated, user } = useStore();
 
   console.disableYellowBox = true;
 
