@@ -29,9 +29,10 @@ import { CreateMammaReportScreen } from "src/screens/Mamas/CreateMammaReport";
 import { GenitalScreen } from "src/screens/Genital";
 import { ProfileScreen } from "screens/Profile";
 
-import { RemindersScreen } from "screens/Reminders";
-import { CreateExamScreen } from "src/screens/Reminders/CreateExam";
-import { CreateAppointmentScreen } from "src/screens/Reminders/CreateAppointment";
+import { ExamsScreen } from "src/screens/Exams";
+import { AppointmentsScreen } from "src/screens/Appointments";
+import { CreateExamScreen } from "src/screens/Exams/CreateExam";
+import { CreateAppointmentScreen } from "src/screens/Appointments/CreateAppointment";
 
 import { ConfigurationScreen } from "screens/Profile/Configuration";
 import { RemindersConfigScreen } from "screens/RemindersConfig";
@@ -75,7 +76,7 @@ function TabNavigator() {
         />
         <Screen
           name="Lembretes"
-          component={RemindersScreen}
+          component={ExamsScreen}
           options={{ title: "", headerShown: false }}
         />
         <Screen
@@ -173,6 +174,15 @@ export function AppNavigator() {
               // }}
               options={{ title: "" }}
             />
+
+            <RootStack.Screen
+              name="Exam"
+              component={ExamsScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+
             <RootStack.Screen
               name="CreateExam"
               component={CreateExamScreen}
@@ -180,6 +190,14 @@ export function AppNavigator() {
               //   headerShown: false,
               // }}
               options={{ title: "" }}
+            />
+
+            <RootStack.Screen
+              name="Appointment"
+              component={AppointmentsScreen}
+              options={{
+                headerShown: false,
+              }}
             />
             <RootStack.Screen
               name="CreateAppointment"

@@ -62,6 +62,16 @@ const store = (set, get) => ({
   exams: [],
   appointment: [],
   pills: [],
+  config: {
+    notifications: {
+      exam: {
+        hourBack: 1,
+      },
+      appointment: {
+        hourBack: 1,
+      },
+    },
+  },
 
   signin: (user, authentication) =>
     set(

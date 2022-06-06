@@ -54,7 +54,7 @@ function getFormatedDateAndTime(date) {
 
 const StarIcon = (props) => <Icon {...props} name="clock-outline" />;
 
-export const CreateExamScreen = ({ visible, setVisible }) => {
+export const EditExamScreen = ({ visible, setVisible }) => {
   const [checked, setChecked] = useState(0);
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
@@ -103,7 +103,7 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
       addExam(exam.data.exam);
 
       setLoading(false);
-      navigation.navigate("Main", { screen: "Lembretes" });
+      navigation.navigate("Exam");
     } catch (err) {
       setLoading(false);
       console.log("Erro ao criar exame ", err);
@@ -135,7 +135,7 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
       <ScrollView>
         <Layout style={styles.content}>
           <Text category="h4" style={styles.title}>
-            Marcar Exame
+            Editar Exame
           </Text>
           <View
             style={{

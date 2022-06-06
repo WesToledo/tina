@@ -21,7 +21,7 @@ import MainHeader from "src/components/MainHeader";
 import useStore from "src/store";
 import { useNavigation } from "@react-navigation/native";
 
-import ListCards from "./components/list.cards.component";
+import ListCards from "../Reminders/components/list.cards.component";
 
 const AppointmenntIcon = (props) => <Icon {...props} name="person" />;
 const ExamIcon = (props) => <Icon {...props} name="file-text" />;
@@ -29,7 +29,7 @@ const GearIcon = (props) => <Icon {...props} name="settings-2-outline" />;
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
-export const RemindersScreen = () => {
+export const AppointmentsScreen = () => {
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
 

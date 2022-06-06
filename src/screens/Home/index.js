@@ -63,7 +63,7 @@ const formatDate = (date) => {
 
 const actions = [
   {
-    color: "red",
+    color: theme["color-primary-500"],
     text: "Exames",
     icon: (
       <Image
@@ -409,16 +409,16 @@ export const HomeScreen = () => {
         onPressItem={(name) => {
           const navigations = {
             appointments: () => {
-              navigation.navigate("CreateAppointment");
+              navigation.navigate("Appointment");
             },
             mamma: () => {
-              navigation.navigate("CreateMamaReport");
+              navigation.navigate("Mama");
             },
             genital: () => {
-              navigation.navigate("CreateGenitalReport");
+              navigation.navigate("Genital");
             },
             exams: () => {
-              navigation.navigate("CreateExam");
+              navigation.navigate("Exam");
             },
           };
           console.log(`selected button: ${name}`);

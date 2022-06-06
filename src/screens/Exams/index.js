@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
 import { SafeAreaView, StyleSheet, ScrollView, View } from "react-native";
 import {
   Icon,
@@ -6,9 +8,7 @@ import {
   Input,
   TopNavigation,
   Text,
-  Spinner,
-  Avatar,
-  Button,
+  TopNavigationAction,
 } from "@ui-kitten/components";
 
 import { default as theme } from "../../../custom-theme.json";
@@ -17,10 +17,12 @@ import Constants from "expo-constants";
 
 import MainHeader from "src/components/MainHeader";
 
-import { ListCards } from "./components/list.cards.component";
 import useStore from "src/store";
 import { useNavigation } from "@react-navigation/native";
+
 import { FloatingAction } from "react-native-floating-action";
+
+import ListCards from "./components/list.cards.component";
 
 const actions = [
   {
@@ -33,7 +35,7 @@ const actions = [
     position: 1,
   },
   {
-    text: "Reportar problema",
+    text: "Marcar Exame",
     color: theme["color-primary-500"],
     icon: (
       <Icon style={{ width: 20, height: 20 }} fill="#fff" name="alert-circle" />
@@ -43,10 +45,29 @@ const actions = [
   },
 ];
 
-export const MamaScreen = () => {
+export const ExamsScreen = () => {
+  const now = new Date();
   const navigation = useNavigation();
 
-  const { mamma } = useStore();
+  const { exams } = useStore();
+
+  const list = exams
+    .map((reminder) => {
+      if (new Date(reminder.date) > now) {
+        return {
+          ...reminder,
+          active: true,
+        };
+      } else {
+        return {
+          ...reminder,
+          active: false,
+        };
+      }
+    })
+    .map((exam) => {
+      return { ...exam, type: "exam" };
+    });
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -54,21 +75,43 @@ export const MamaScreen = () => {
         <MainHeader />
         {/* <TopNavigation
           alignment="left"
+          accessoryLeft={BackAction}
+          accessoryRight={() => (
+            <TopNavigationAction
+              icon={GearIcon}
+              onPress={handleNavigateConfigScreen}
+            />
+          )}
+        /> */}
+        {/* <TopNavigation
+          style={styles.top}
+          alignment="left"
           accessoryRight={() => (
             <Button
+              accessoryLeft={ExamIcon}
               style={styles.button}
               appearance="filled"
-              onPress={handleAddNewOcurrency}
+              onPress={handleAddNewExam}
             >
-              Reportar Problema
+              Marcar Exame
+            </Button>
+          )}
+          accessoryLeft={() => (
+            <Button
+              accessoryLeft={AppointmenntIcon}
+              style={styles.button}
+              appearance="filled"
+              onPress={handleAddNewAppointment}
+            >
+              Marcar Consulta
             </Button>
           )}
         /> */}
 
+        <Text category="h4" style={styles.title}>
+          Exames
+        </Text>
         <ScrollView>
-          <Text category="h4" style={styles.title}>
-            Saúde das Mamas
-          </Text>
           {/* <Layout style={{ flex: 1 }}>
             <Input
               label=""
@@ -80,28 +123,30 @@ export const MamaScreen = () => {
               style={styles.search_input}
             />
           </Layout> */}
-          <ListCards mamma={mamma} />
-        </ScrollView>
-      </Layout>
-      {/* <ModalCreateOcurrency visible={visible} setVisible={setVisible} /> */}
 
-      <FloatingAction
-        tintColor={null}
-        actions={actions}
-        color={theme["color-primary-500"]}
-        onPressItem={(name) => {
-          const navigations = {
-            back: () => {
-              navigation.goBack();
-            },
-            report: () => {
-              navigation.navigate("CreateMamaReport");
-            },
-          };
-          console.log(`selected button: ${name}`);
-          navigations[name]();
-        }}
-      />
+          <ListCards
+            actives={list.filter((reminder) => reminder.active)}
+            disableds={list.filter((reminder) => !reminder.active)}
+          />
+        </ScrollView>
+        <FloatingAction
+          tintColor={null}
+          actions={actions}
+          color={theme["color-primary-500"]}
+          onPressItem={(name) => {
+            const navigations = {
+              back: () => {
+                navigation.goBack();
+              },
+              report: () => {
+                navigation.navigate("CreateExam");
+              },
+            };
+            console.log(`selected button: ${name}`);
+            navigations[name]();
+          }}
+        />
+      </Layout>
     </SafeAreaView>
   );
 };
@@ -124,5 +169,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 50,
+  },
+  top: {
+    margin: 10,
   },
 });
