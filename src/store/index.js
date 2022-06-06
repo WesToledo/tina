@@ -65,9 +65,11 @@ const store = (set, get) => ({
   config: {
     notifications: {
       exam: {
+        enabled: true,
         hourBack: 1,
       },
       appointment: {
+        enabled: true,
         hourBack: 1,
       },
     },

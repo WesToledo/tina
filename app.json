@@ -29,7 +29,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "SERVER_URL": "https://tina-server.herokuapp.com"
+      "SERVER_URL": "https://35b6-143-255-173-179.sa.ngrok.io"
     }
   }
 }

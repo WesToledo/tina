@@ -36,7 +36,7 @@ function getFormatedDate(date) {
 function getFormatedTime(date) {
   return `${moment(date).format("HH:mm")}`;
 }
-export const CardExam = ({ reminder, disabled }) => {
+export const CardAppointment = ({ reminder, disabled }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -63,13 +63,13 @@ export const CardExam = ({ reminder, disabled }) => {
               <View style={styles.info}>
                 {!disabled ? (
                   <>
-                    <Text category="h6">{reminder.name}</Text>
+                    <Text category="h6">{reminder.specialty}</Text>
                     <Text category="s1">{getFormatedDate(reminder.date)}</Text>
                   </>
                 ) : (
                   <>
                     <Text category="h6" appearance="hint">
-                      {reminder.name}
+                      {reminder.specialty}
                     </Text>
                     <Text category="s1" appearance="hint">
                       {getFormatedDate(reminder.date)}
@@ -91,9 +91,9 @@ export const CardExam = ({ reminder, disabled }) => {
                       <Icon
                         style={styles.icon_inner}
                         fill="#8F9BB3"
-                        name={"pin-outline"}
+                        name={"person-outline"}
                       />
-                      <Text category="s2">{reminder.hospital_name}</Text>
+                      <Text category="s2">{reminder.doctor_name}</Text>
                     </View>
                   </>
                 ) : (

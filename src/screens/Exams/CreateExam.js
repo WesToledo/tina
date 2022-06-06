@@ -23,6 +23,8 @@ import {
 } from "@ui-kitten/components";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
+import moment from "moment";
+
 import api from "src/services/api";
 
 import useStore from "src/store";
@@ -34,24 +36,6 @@ const LoadingIndicator = (props) => (
     <Spinner size="small" status="basic" />
   </View>
 );
-
-function getFormatedDateAndTime(date) {
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var dt = date.getDate();
-
-  var hr = date.getHours();
-  var min = date.getMinutes();
-
-  if (dt < 10) {
-    dt = "0" + dt;
-  }
-  if (month < 10) {
-    month = "0" + month;
-  }
-
-  return `Exame programado para ${dt}/${month}/${year} - ${hr}h${min}min`;
-}
 
 const StarIcon = (props) => <Icon {...props} name="clock-outline" />;
 
@@ -95,12 +79,30 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
         hospital_name: hospitalName,
         obs: description,
         name: exams_types[selectedIndex.row].label,
+        has_notification: config.notifications.exam.enabled,
+        notification: {
+          dateTime: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours() - 1,
+            date.getMinutes()
+          ),
+        },
       });
 
       const callbackNotification = (notification) => {
         addExam({
           ...exam.data.exam,
-          notification: { id: notification, dateTime: date },
+          notification: {
+            dateTime: new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              date.getDate(),
+              date.getHours() - 1,
+              date.getMinutes()
+            ),
+          },
         });
 
         setLoading(false);
@@ -112,7 +114,7 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
           date.getFullYear(),
           date.getMonth(),
           date.getDate(),
-          date.getHours() - config.notifications.exam.hourBack,
+          date.getHours() - 1,
           date.getMinutes()
         ),
         exams_types[selectedIndex.row].label,
@@ -125,6 +127,10 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
       console.log("Erro ao criar exame ", err);
     }
   }
+
+  useEffect(() => {
+    console.log(date.toUTCString());
+  }, [date]);
 
   // const [date, setDate] = useState(new Date(1598051730000));
 
@@ -174,11 +180,11 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
             <Button
               style={styles.timePicker}
               onPress={showTimepicker}
-              accessoryLeft={StarIcon}
-            />
+              // accessoryLeft={StarIcon}
+            >{`${moment(date).format("HH[h]mm")}`}</Button>
           </View>
 
-          <Text>{getFormatedDateAndTime(date)}</Text>
+          {/* <Text>{`${moment(date).format("HH:mm")}`}</Text> */}
           <View
             style={{
               flexDirection: "column",
@@ -247,7 +253,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   timePicker: {
-    padding: 5,
+    marginLeft: 5,
   },
   content: {
     paddingHorizontal: 15,

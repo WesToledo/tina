@@ -38,7 +38,7 @@ const actions = [
     text: "Marcar Exame",
     color: theme["color-primary-500"],
     icon: (
-      <Icon style={{ width: 20, height: 20 }} fill="#fff" name="alert-circle" />
+      <Icon style={{ width: 20, height: 20 }} fill="#fff" name="plus-outline" />
     ),
     name: "report",
     position: 2,

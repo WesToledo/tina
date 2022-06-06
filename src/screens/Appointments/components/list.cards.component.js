@@ -2,56 +2,40 @@ import React from "react";
 import { StyleSheet, Image, ScrollView, View } from "react-native";
 import { Divider, Layout, Text } from "@ui-kitten/components";
 
-import { CardReminder } from "./card.exam.component";
+import { CardAppointment } from "./card.appointment.component";
 import { ExamsScreen } from "../../Exams";
 
-const ListCards = ({ reminders }) => {
-  const now = new Date();
-
-  const aux = reminders.map((reminder) => {
-    if (new Date(reminder.date) > now) {
-      return {
-        ...reminder,
-        active: true,
-      };
-    } else {
-      return {
-        ...reminder,
-        active: false,
-      };
-    }
-  });
-
+const ListCards = ({ actives, disableds }) => {
   return (
     <Layout style={styles.container}>
-      {reminders.length == 0 ? (
+      {actives.length == 0 ? (
         <Text appearance="hint" category="h6" style={styles.title}>
-          Nenhum lembrete diponível
+          Nenhuma consulta encontrada
         </Text>
       ) : (
         <ScrollView>
           <Layout>
-            <Text appearance="hint" category="h6">
-              Lembretes ativos
-            </Text>
-            {aux
-              .filter((reminder) => reminder.active)
-              .map((reminder, index) => (
-                <>
-                  <CardReminder key={index} reminder={reminder} />
-                </>
-              ))}
+            <Text category="h6">Lembretes ativos</Text>
+            {actives.map((reminder, index) => (
+              <>
+                <CardAppointment key={index} reminder={reminder} />
+              </>
+            ))}
 
-            <Text appearance="hint" category="h6" style={{ marginVertical: 5 }}>
-              Lembretes passados
-            </Text>
-            {aux
-              .filter((reminder) => !reminder.active)
-              .map((reminder, index) => (
-                <>
-                  <CardReminder key={index} reminder={reminder} />
-                </>
-              ))}
+            {disableds.length != 0 && (
+              <>
+                <Text
+                  appearance="hint"
+                  category="h6"
+                  style={{ marginVertical: 5 }}
+                >
+                  Exames passados
+                </Text>
+                {disableds.map((reminder, index) => (
+                  <CardAppointment key={index} reminder={reminder} disabled />
+                ))}
+              </>
+            )}
           </Layout>
         </ScrollView>
       )}

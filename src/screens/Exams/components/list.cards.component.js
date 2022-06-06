@@ -6,6 +6,8 @@ import { CardExam } from "./card.exam.component";
 import { ExamsScreen } from "../../Exams";
 
 const ListCards = ({ actives, disableds }) => {
+  console.log("actives", actives);
+
   return (
     <Layout style={styles.container}>
       {actives.length == 0 ? (

@@ -27,6 +27,7 @@ import api from "src/services/api";
 
 import useStore from "src/store";
 import { useNavigation } from "@react-navigation/native";
+import { schedulePushNotification } from "src/services/notifications";
 
 const LoadingIndicator = (props) => (
   <View style={[props.style, styles.indicator]}>
@@ -64,7 +65,7 @@ export const CreateAppointmentScreen = ({ visible, setVisible }) => {
   const [description, setDescription] = useState();
   const [doctorName, setDoctorName] = useState();
 
-  const { user, addAppointment } = useStore();
+  const { user, addAppointment, config } = useStore();
 
   const specialtys_types = [
     {
@@ -98,12 +99,49 @@ export const CreateAppointmentScreen = ({ visible, setVisible }) => {
         doctor_name: doctorName,
         obs: description,
         specialty: specialtys_types[selectedIndex.row].label,
+        has_notification: true,
+        notification: {
+          dateTime: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours() - 1,
+            date.getMinutes()
+          ),
+        },
       });
 
-      addAppointment(appointment.data.appointment);
+      const callbackNotification = (notification) => {
+        addAppointment({
+          ...appointment.data.appointment,
+          notification: {
+            dateTime: new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              date.getDate(),
+              date.getHours() - 1,
+              date.getMinutes()
+            ),
+          },
+        });
 
-      setLoading(false);
-      navigation.navigate("Main", { screen: "Lembretes" });
+        setLoading(false);
+        navigation.navigate("Appointment");
+      };
+
+      schedulePushNotification(
+        new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          date.getHours() - 1,
+          date.getMinutes()
+        ),
+        specialtys_types[selectedIndex.row].label,
+        doctorName,
+        {},
+        callbackNotification
+      );
     } catch (err) {
       setLoading(false);
       console.log("Erro ao criar consulta ", err);
