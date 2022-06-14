@@ -40,7 +40,7 @@ const LoadingIndicator = (props) => (
 const StarIcon = (props) => <Icon {...props} name="clock-outline" />;
 
 export const CreateExamScreen = ({ visible, setVisible }) => {
-  const [checked, setChecked] = useState(0);
+
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
   const navigation = useNavigation();
@@ -79,7 +79,7 @@ export const CreateExamScreen = ({ visible, setVisible }) => {
         hospital_name: hospitalName,
         obs: description,
         name: exams_types[selectedIndex.row].label,
-        has_notification: config.notifications.exam.enabled,
+        has_notification: config.notifications.exam.enabled || true,
         notification: {
           dateTime: new Date(
             date.getFullYear(),

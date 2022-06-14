@@ -33,13 +33,12 @@ function getFormatedTime(date) {
   return `${hr}h${min}`;
 }
 const EventsList = ({ visible, setVisible, markedDates, selectedDay }) => {
-  const [checked, setChecked] = useState(0);
-  const [loading, setLoading] = useState(false);
-
-  const [date, setDate] = useState(new Date());
-  const [description, setDescription] = useState("");
-
-  const { user, addMammaOcurrency } = useStore();
+  const types = {
+    fact: "danger",
+    exam: "info",
+    appointment: "success",
+    pill: "primary",
+  };
 
   return (
     <View style={styles.container}>
@@ -52,29 +51,29 @@ const EventsList = ({ visible, setVisible, markedDates, selectedDay }) => {
               {selectedDay &&
                 markedDates[selectedDay]?.map(
                   ({ date, title, subtitle, obs, type }) => (
-                    <Card
-                      style={styles.card}
-                      status={
-                        type == "fact"
-                          ? "danger"
-                          : type === "exam"
-                          ? "info"
-                          : "success"
-                      }
-                    >
-                      <View>
-                        <Text category="h6">{title}</Text>
-                        <Text category="s1">{subtitle}</Text>
-                        {type != "fact" && (
-                          <Text
-                            category="s1"
-                            // status="primary"
-                            style={{ fontWeight: "bold" }}
-                          >
+                    <Card style={styles.card} status={types[type]}>
+                      {type !== "pill" ? (
+                        <View>
+                          <Text category="h6">{title}</Text>
+                          <Text category="s1">{subtitle}</Text>
+                          {type != "fact" && (
+                            <Text
+                              category="s1"
+                              // status="primary"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              {getFormatedTime(new Date(date))}
+                            </Text>
+                          )}
+                        </View>
+                      ) : (
+                        <View>
+                          <Text category="h6">Pílula Tomada</Text>
+                          <Text category="s1" appearance="hint">
                             {getFormatedTime(new Date(date))}
                           </Text>
-                        )}
-                      </View>
+                        </View>
+                      )}
                     </Card>
                   )
                 )}

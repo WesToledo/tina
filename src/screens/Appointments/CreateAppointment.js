@@ -23,6 +23,8 @@ import {
 } from "@ui-kitten/components";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
+import moment from "moment";
+
 import api from "src/services/api";
 
 import useStore from "src/store";
@@ -35,28 +37,7 @@ const LoadingIndicator = (props) => (
   </View>
 );
 
-function getFormatedDateAndTime(date) {
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var dt = date.getDate();
-
-  var hr = date.getHours();
-  var min = date.getMinutes();
-
-  if (dt < 10) {
-    dt = "0" + dt;
-  }
-  if (month < 10) {
-    month = "0" + month;
-  }
-
-  return `Consulta programada para ${dt}/${month}/${year} - ${hr}h${min}min`;
-}
-
-const StarIcon = (props) => <Icon {...props} name="clock-outline" />;
-
 export const CreateAppointmentScreen = ({ visible, setVisible }) => {
-  const [checked, setChecked] = useState(0);
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
   const navigation = useNavigation();
@@ -99,7 +80,7 @@ export const CreateAppointmentScreen = ({ visible, setVisible }) => {
         doctor_name: doctorName,
         obs: description,
         specialty: specialtys_types[selectedIndex.row].label,
-        has_notification: true,
+        has_notification: config.notifications.appointment.enabled || true,
         notification: {
           dateTime: new Date(
             date.getFullYear(),
@@ -197,11 +178,10 @@ export const CreateAppointmentScreen = ({ visible, setVisible }) => {
             <Button
               style={styles.timePicker}
               onPress={showTimepicker}
-              accessoryLeft={StarIcon}
-            />
+              // accessoryLeft={StarIcon}
+            >{`${moment(date).format("HH[h]mm")}`}</Button>
           </View>
 
-          <Text>{getFormatedDateAndTime(date)}</Text>
           <View
             style={{
               flexDirection: "column",

@@ -148,12 +148,14 @@ export const HomeScreen = () => {
   const factDot = { key: "fact", color: "red" };
   const examDot = { key: "exam", color: "blue" };
   const appointmentDot = { key: "appointment", color: "green" };
+  const pillDot = { key: "pill", color: "purple" };
 
   const getDotByType = (type) => {
     const dots = {
       fact: factDot,
       exam: examDot,
       appointment: appointmentDot,
+      pill: pillDot,
     };
     return dots[type];
   };
@@ -227,6 +229,12 @@ export const HomeScreen = () => {
           type: "fact",
           subtitle: "Saúde das Genitais",
           obs: description,
+        };
+      }),
+      ...pills.map(({ date }) => {
+        return {
+          date,
+          type: "pill",
         };
       }),
     ];
@@ -328,7 +336,7 @@ export const HomeScreen = () => {
             <>
               <TopNavigationAction
                 icon={BellIcon}
-                onPress={() => navigation.navigate("Lembretes")}
+                onPress={() => navigation.navigate("NotificationScreen")}
               />
               <TopNavigationAction
                 icon={GearIcon}

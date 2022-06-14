@@ -42,6 +42,8 @@ import { CreateGenitalReportScreen } from "./screens/Genital/CreateGenitalReport
 import { ConfigReminderPillScreen } from "./screens/RemindersConfig/ConfigReminderPill";
 import { ConfigReminderColectorScreen } from "./screens/RemindersConfig/ConfigReminderColector";
 
+import { NotificationScreen } from "./screens/Notifications";
+
 const { Navigator, Screen } = createBottomTabNavigator();
 const RootStack = createStackNavigator();
 
@@ -222,6 +224,15 @@ export function AppNavigator() {
               //   headerShown: false,
               // }}
               options={{ title: "" }}
+            />
+
+            <RootStack.Screen
+              name="NotificationScreen"
+              component={NotificationScreen}
+              options={{
+                headerShown: false,
+              }}
+              // options={{ title: "" }}
             />
           </>
         )}
